@@ -23,5 +23,4 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':baselibrary')
 
-    annotationProcessor butterknife_compiler
 }
