@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include layout="@layout/common_app_bar"/>
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"

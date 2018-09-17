@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="windowTransaction">#00000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#262c34</color>
+    <!--一般：标题背景颜色-->
+    <color name="colorTitleBg">#ffffff</color>
+    <!--重要：用于重要的文字信息，标题信息（如导航名称、大板块标题，类目名称等）-->
+    <color name="colorTitle">#181816</color>
+</resources>

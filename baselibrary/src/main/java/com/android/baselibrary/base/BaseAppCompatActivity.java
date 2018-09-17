@@ -72,20 +72,15 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         if (getContentViewLayoutID() != 0) {
             setContentView(getContentViewLayoutID());
         } else {
-            throw new IllegalArgumentException("You must return a right contentView layout resource Id");
+            throw new IllegalArgumentException(
+                "You must return a right contentView layout resource Id");
         }
-        if (hasTitleBar()){
+        if (hasTitleBar()) {
             setCustomTitle(getTitle());
             onNavigateClick();
         }
         initViewsAndEvents();
 
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
     }
 
     protected abstract void onNavigateClick();
@@ -106,14 +101,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      */
     protected abstract void initViewsAndEvents();
 
-    private void getDisplayInfo() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mScreenDensity = displayMetrics.density;
-        mScreenHeight = displayMetrics.heightPixels;
-        mScreenWidth = displayMetrics.widthPixels;
-    }
-
     /**
      * 是否可以使用沉浸式
      * Is immersion bar enabled boolean.
@@ -122,11 +109,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      */
     protected boolean isImmersionBarEnabled() {
         return true;
-    }
-
-    protected void initImmersionBar() {
-        mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.init();
     }
 
     /**
@@ -150,6 +132,28 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      * @return TransitionMode
      */
     protected abstract TransitionMode getTransitionMode();
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
+    }
+
+    private void getDisplayInfo() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        mScreenDensity = displayMetrics.density;
+        mScreenHeight = displayMetrics.heightPixels;
+        mScreenWidth = displayMetrics.widthPixels;
+    }
+
+    protected void initImmersionBar() {
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.init();
+        if (ImmersionBar.isSupportStatusBarDarkFont()) {
+            mImmersionBar.statusBarDarkFont(true,0.2f).keyboardEnable(true).init();
+        }
+    }
 
     /**
      * 设置转场动画
@@ -220,6 +224,32 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     /**
+     * Activity 跳转
+     *
+     * @param clazz  目标activity
+     * @param bundle 传递参数
+     * @param finish 是否结束当前activity
+     */
+    private void _goActivity(Class<? extends Activity> clazz, Bundle bundle, int requestCode,
+        boolean finish) {
+        if (null == clazz) {
+            throw new IllegalArgumentException("you must pass a target activity where to go.");
+        }
+        Intent intent = new Intent(this, clazz);
+        if (null != bundle) {
+            intent.putExtras(bundle);
+        }
+        if (requestCode > NON_CODE) {
+            startActivityForResult(intent, requestCode);
+        } else {
+            startActivity(intent);
+        }
+        if (finish) {
+            finish();
+        }
+    }
+
+    /**
      * startActivity
      *
      * @param clazz target Activity
@@ -231,8 +261,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     /**
      * startActivity with bundle
      *
-     * @param clazz  target Activity
-     * @param bundle
+     * @param clazz target Activity
      */
     protected void go(Class<? extends Activity> clazz, Bundle bundle) {
         _goActivity(clazz, bundle, NON_CODE, false);
@@ -259,9 +288,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * startActivityForResult
-     *
-     * @param clazz
-     * @param requestCode
      */
     protected void goForResult(Class<? extends Activity> clazz, int requestCode) {
         _goActivity(clazz, null, requestCode, false);
@@ -269,10 +295,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * startActivityForResult with bundle
-     *
-     * @param clazz
-     * @param bundle
-     * @param requestCode
      */
     protected void goForResult(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
         _goActivity(clazz, bundle, requestCode, false);
@@ -280,9 +302,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * startActivityForResult then finish this
-     *
-     * @param clazz
-     * @param requestCode
      */
     protected void goForResultAndFinish(Class<? extends Activity> clazz, int requestCode) {
         _goActivity(clazz, null, requestCode, true);
@@ -290,37 +309,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * startActivityForResult with bundle and then finish this
-     *
-     * @param clazz
-     * @param bundle
-     * @param requestCode
      */
-    protected void goForResultAndFinish(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
+    protected void goForResultAndFinish(Class<? extends Activity> clazz, Bundle bundle,
+        int requestCode) {
         _goActivity(clazz, bundle, requestCode, true);
-    }
-
-    /**
-     * Activity 跳转
-     *
-     * @param clazz  目标activity
-     * @param bundle 传递参数
-     * @param finish 是否结束当前activity
-     */
-    private void _goActivity(Class<? extends Activity> clazz, Bundle bundle, int requestCode, boolean finish) {
-        if (null == clazz) {
-            throw new IllegalArgumentException("you must pass a target activity where to go.");
-        }
-        Intent intent = new Intent(this, clazz);
-        if (null != bundle) {
-            intent.putExtras(bundle);
-        }
-        if (requestCode > NON_CODE) {
-            startActivityForResult(intent, requestCode);
-        } else {
-            startActivity(intent);
-        }
-        if (finish) {
-            finish();
-        }
     }
 }

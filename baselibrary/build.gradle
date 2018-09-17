@@ -36,6 +36,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api tests.junit
+    api constraints.layout
 
     api butterknife
     api butterknife_compiler

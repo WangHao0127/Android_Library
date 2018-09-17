@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.library">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!--  android:resizeableActivity="true"
-          解决全面屏上下部分留黑或留白问题 -->
-
+    <!--
+      android:resizeableActivity="true"
+          解决全面屏上下部分留黑或留白问题
+    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,14 +15,17 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-         <activity android:name=".MainActivity">
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".MainActivity">
 
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-         </activity>
+        </activity>
+        <activity android:name=".FullActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
