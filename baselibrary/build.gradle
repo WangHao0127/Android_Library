@@ -39,6 +39,8 @@ dependencies {
     api tests.junit
     api constraints.layout
 
+    api multidex
+
     api butterknife
     api butterknife_compiler
     //添加了annotationProcessor,否则编译不过

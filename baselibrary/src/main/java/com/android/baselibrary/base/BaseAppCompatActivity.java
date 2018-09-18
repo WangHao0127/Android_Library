@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.android.baselibrary.R;
+import com.android.baselibrary.basedata.EventBusData;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -82,6 +83,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         initViewsAndEvents();
 
     }
+
+    protected abstract void eventBusPost(EventBusData data);
 
     protected abstract void onNavigateClick();
 

@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import com.android.baselibrary.R;
 import com.android.baselibrary.base.BaseAppCompatActivity;
+import com.android.baselibrary.basedata.EventBusData;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 
@@ -113,6 +116,11 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
             }
             toast.show();
         }
+    }
+
+    @Override
+    protected void eventBusPost(EventBusData data) {
+        EventBus.getDefault().post(data);
     }
 
     public void showToast(int msg) {
