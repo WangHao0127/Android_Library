@@ -1,4 +1,4 @@
-package com.android.baselibrary.base;
+package com.android.baselibrary.basenet;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

@@ -1,7 +1,4 @@
-package com.android.baselibrary.netbase;
-
-import com.android.baselibrary.base.CustomInterceptor;
-import com.android.baselibrary.base.NobodyConverterFactory;
+package com.android.baselibrary.basenet;
 
 import java.util.concurrent.TimeUnit;
 

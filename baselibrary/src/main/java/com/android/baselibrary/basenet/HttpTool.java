@@ -1,11 +1,8 @@
-package com.android.baselibrary.base;
+package com.android.baselibrary.basenet;
 
 import android.app.Activity;
 
 import java.lang.ref.WeakReference;
-import java.util.Map;
-
-import okhttp3.OkHttpClient;
 
 /**
  * Author: WangHao
@@ -14,12 +11,7 @@ import okhttp3.OkHttpClient;
  */
 public class HttpTool {
 
-    private static final int DEFAULT_TIMEOUT = 30;
-
     private WeakReference<Activity> mWeakReference;
-
-    private OkHttpClient okHttpClient;
-    private static Map headers = null;
 
     public static HttpTool newInstance(Activity context){
         HttpTool httpTool = new HttpTool(context);

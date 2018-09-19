@@ -1,4 +1,4 @@
-package com.android.baselibrary.netbase;
+package com.android.baselibrary.basenet;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

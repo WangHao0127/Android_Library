@@ -1,6 +1,6 @@
 package com.android.library.net;
 
-import com.android.baselibrary.netbase.BaseRetrofitServiceFactory;
+import com.android.baselibrary.basenet.BaseRetrofitServiceFactory;
 import com.android.library.BuildConfig;
 
 import java.util.Map;
