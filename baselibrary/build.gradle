@@ -27,7 +27,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,5 +48,13 @@ dependencies {
 
     api eventbus
     api immersionbar
+
+    api retrofit  // 针对Android和Java类型安全的http客户端
+    api retrofit_adapter_rxjava  // 使Retrofit支持RxJava
+    api okhttp3_logging_interceptor  // 网络请求组件日志输出
+    api retrofit_converter_gson
+    api rx_java  // 响应式编程框架
+    api rx_android
+    api okhttp3
 
 }

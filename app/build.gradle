@@ -1,4 +1,13 @@
 apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08"))
+}
+
+def apkFileName(variant, versionName) {
+    return "${rootProject.name}-${variant.flavorName}-${variant.buildType.name}-v${versionName}-${releaseTime()}.apk"
+}
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -17,10 +26,41 @@ android {
             }
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { //output ->
+            if (variant.buildType.name == "debug" && variant.flavorName == "staging") {
+                return
+            }
+            outputFileName = apkFileName(variant, defaultConfig.versionName)
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+        }
+        debug {
+            minifyEnabled false
+            applicationIdSuffix = ".debug"
+            matchingFallbacks = ['debug', 'release']
+        }
+
+        // 开发环境
+        stagingDebug{
+            initWith debug
+
+            // API基地址
+            buildConfigField("String", "BASE_URL", "\"http://${config.APP_BASE_URL}/data/sk/\"")
+        }
+
+        stagingRelease{
+            initWith release
+
+            // API基地址
+            buildConfigField("String", "BASE_URL", "\"http://${config.APP_BASE_URL}/data/sk/\"")
         }
     }
 }

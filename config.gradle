@@ -1,0 +1,10 @@
+// 项目统一配置
+ext {
+    /*API基地址*/
+    SERVICE_APP = "www.weather.com.cn"
+
+    config = [
+            APP_BASE_URL  : "$SERVICE_APP",
+    ]
+
+}

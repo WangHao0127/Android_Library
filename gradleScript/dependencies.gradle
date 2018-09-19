@@ -1,7 +1,7 @@
 ext {
     //version
-    VERSION_CODE =1
-    VERSION_NAME ='1.0'
+    VERSION_CODE =15
+    VERSION_NAME ='3.0.0'
 
     // Android Version
     COMPILE_SDK_VERSION = 27
@@ -23,6 +23,12 @@ ext {
     IMMERSIONBAR_VERSION = '2.3.2-beta01'
 
     MULTIDEX_VERSION = "1.0.1"
+
+    RETROFIT2_VERSION = '2.2.0'
+    OKHTTP3_VERSION = '3.6.0'
+    RXJAVA_VERSION = '2.+'
+    RXANDROID_VERSION = '2.+'
+    OKHTTP3_VERSION = '3.6.0'
     // Support Libraries
     supportDependencies = [
             v4               : "com.android.support:support-v4:${SUPPORT_LIB_VERSION}",
@@ -60,5 +66,20 @@ ext {
     /*沉浸式状态栏 https://github.com/gyf-dev/ImmersionBar*/
     immersionbar = "com.gyf.immersionbar:immersionbar:${IMMERSIONBAR_VERSION}"
 
+    /*Multidex*/
     multidex = "com.android.support:multidex:${MULTIDEX_VERSION}"
+
+    /*retrofit*/
+    retrofit = "com.squareup.retrofit2:retrofit:${RETROFIT2_VERSION}"
+    retrofit_adapter_rxjava = "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT2_VERSION}"
+    retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:${RETROFIT2_VERSION}"
+
+    /*okHttp*/
+    okhttp3 = "com.squareup.okhttp3:okhttp:${OKHTTP3_VERSION}"
+    /*rx java*/
+    rx_java = "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
+    rx_android = "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
+
+    okhttp3_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${OKHTTP3_VERSION}"
+
 }
