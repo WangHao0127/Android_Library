@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.baselibrary.R;
 import com.android.baselibrary.basedata.EventBusData;
+import com.android.baselibrary.basenet.HttpTool;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,6 +41,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     protected boolean isVisible;
 
+    protected HttpTool httpTool;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -79,6 +81,10 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         mScreenHeight = displayMetrics.heightPixels;
         mScreenWidth = displayMetrics.widthPixels;
         initViewsAndEvents();
+    }
+
+    protected void initHttp() {
+        httpTool=HttpTool.newInstance(getActivity());
     }
 
     protected void eventBusPost(EventBusData data) {
@@ -211,6 +217,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        httpTool.clear();
         mToast = null;
         hideLoading();
         if (isBindEventBusHere()) {

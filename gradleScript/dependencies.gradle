@@ -1,7 +1,7 @@
 ext {
     //version
-    VERSION_CODE =15
-    VERSION_NAME ='3.0.0'
+    VERSION_CODE = 15
+    VERSION_NAME = '3.0.0'
 
     // Android Version
     COMPILE_SDK_VERSION = 27
@@ -29,6 +29,8 @@ ext {
     RXJAVA_VERSION = '2.+'
     RXANDROID_VERSION = '2.+'
     OKHTTP3_VERSION = '3.6.0'
+    LOGGER_VERSION = "2.2.0"
+
     // Support Libraries
     supportDependencies = [
             v4               : "com.android.support:support-v4:${SUPPORT_LIB_VERSION}",
@@ -82,4 +84,5 @@ ext {
 
     okhttp3_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${OKHTTP3_VERSION}"
 
+    orhanobut_logger = "com.orhanobut:logger:${LOGGER_VERSION}"
 }

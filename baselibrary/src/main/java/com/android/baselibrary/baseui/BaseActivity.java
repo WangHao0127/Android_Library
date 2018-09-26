@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.android.baselibrary.R;
 import com.android.baselibrary.base.BaseAppCompatActivity;
 import com.android.baselibrary.basedata.EventBusData;
+import com.android.baselibrary.basenet.HttpTool;
 
 import org.greenrobot.eventbus.EventBus;
 

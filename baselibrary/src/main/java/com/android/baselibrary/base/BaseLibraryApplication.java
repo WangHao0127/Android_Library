@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.android.baselibrary.BuildConfig;
+import com.android.baselibrary.baseutil.LoggerUtil;
+
 /**
  * Author: WangHao
  * Created On: 2018/9/18 0018 16:58
@@ -19,6 +22,7 @@ public class BaseLibraryApplication extends MultiDexApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+        LoggerUtil.init(BuildConfig.DEBUG);
     }
 
 

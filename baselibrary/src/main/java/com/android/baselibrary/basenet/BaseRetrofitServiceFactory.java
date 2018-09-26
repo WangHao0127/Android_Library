@@ -1,5 +1,7 @@
 package com.android.baselibrary.basenet;
 
+import com.android.baselibrary.base.HttpLogger;
+
 import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
@@ -18,7 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public abstract class BaseRetrofitServiceFactory {
 
-    private static final int DEFAULT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 10;
+    private static final int RW_TIMEOUT = 20;
 
     protected Converter.Factory getNobodyConverterFactory(){
         return NobodyConverterFactory.create();
@@ -27,16 +30,18 @@ public abstract class BaseRetrofitServiceFactory {
     protected Converter.Factory getConverterFactory() {
         Gson gson = new GsonBuilder().serializeNulls().create();
         return GsonConverterFactory.create(gson);
-    }
 
+    }
 
     public Retrofit.Builder getBuilder() {
         // Setup http log
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(getLogLevel());
         OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new CustomInterceptor())
+            .addInterceptor(new HttpLoggingInterceptor(new HttpLogger()).setLevel(getLogLevel()))
             .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(RW_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(RW_TIMEOUT, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
             .build();
 
         Retrofit.Builder builder = new Retrofit.Builder()

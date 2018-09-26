@@ -1,25 +1,26 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-
+def configs = rootProject.ext.android //android配置
+def thirdPartyDependencies = rootProject.ext.thirdPartyDependencies
 buildscript {
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath butterknife_gradle_plugin
+        classpath thirdPartyDependencies.butterknife_gradle_plugin
     }
 }
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion configs.compileSdkVersion
+    buildToolsVersion configs.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion MIN_SDK_VERSION
-        targetSdkVersion TARGET_SDK_VERSION
-        versionCode VERSION_CODE
-        versionName VERSION_NAME
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode  configs.versionCode
+        versionName  configs.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -35,26 +36,34 @@ android {
 }
 
 dependencies {
+    //依赖库配置
+    def tests = rootProject.ext.tests
+    def constraints = rootProject.ext.constraints
+    def netDependencies = rootProject.ext.netDependencies
+//    def thirdPartyDependencies = rootProject.ext.thirdPartyDependencies
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //添加了annotationProcessor,否则编译不过
+    annotationProcessor thirdPartyDependencies.butterknife_compiler
+
     api tests.junit
     api constraints.layout
 
-    api multidex
+    api netDependencies.retrofit  // 针对Android和Java类型安全的http客户端
+    api netDependencies.retrofit_adapter_rxjava  // 使Retrofit支持RxJava
+    api netDependencies.okhttp3_logging_interceptor  // 网络请求组件日志输出
+    api netDependencies.retrofit_converter_gson
+    api netDependencies.rx_java  // 响应式编程框架
+    api netDependencies.rx_android
+    api netDependencies.okhttp3
 
-    api butterknife
-    api butterknife_compiler
-    //添加了annotationProcessor,否则编译不过
-    annotationProcessor butterknife_compiler
+    api thirdPartyDependencies.orhanobut_logger
+    api thirdPartyDependencies.multidex
+    api thirdPartyDependencies.butterknife
+    api thirdPartyDependencies.butterknife_compiler
+    api thirdPartyDependencies.eventbus
+    api thirdPartyDependencies.immersionbar
 
-    api eventbus
-    api immersionbar
-
-    api retrofit  // 针对Android和Java类型安全的http客户端
-    api retrofit_adapter_rxjava  // 使Retrofit支持RxJava
-    api okhttp3_logging_interceptor  // 网络请求组件日志输出
-    api retrofit_converter_gson
-    api rx_java  // 响应式编程框架
-    api rx_android
-    api okhttp3
 
 }

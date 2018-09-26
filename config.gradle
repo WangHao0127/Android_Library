@@ -4,7 +4,100 @@ ext {
     SERVICE_APP = "www.weather.com.cn"
 
     config = [
-            APP_BASE_URL  : "$SERVICE_APP",
+            APP_BASE_URL: "$SERVICE_APP",
     ]
 
+    android = [
+            // Android Version
+            compileSdkVersion: 27,
+            buildToolsVersion: '27.0.3',
+            minSdkVersion    : 16,
+            targetSdkVersion : 27,
+            versionCode      : 2,
+            versionName      : "1.1.1"
+    ]
+
+    dependVersion = [
+            support_lib_version       : "27.0.2",
+            support_constraint_version: "1.0.2",
+            support_test_version      : "0.5",
+            test_espresso_version     : "2.2.2",
+            junit_version             : "4.12",
+
+            butterknife_version       : "8.8.1",
+            butterknife_gradle_plugin : "8.4.0",
+
+            eventbus_version          : "3.0.0",
+            immersionbar_version      : "2.3.2-beta01",
+
+            multidex_version          : "1.0.1",
+
+            retrofit2_version         : "2.2.0",
+            okhttp3_version           : "3.6.0",
+            rxjava_version            : "2.+",
+            rxandroid_version         : "2.+",
+            okhttp3_version           : "3.6.0",
+            logger_version            : "2.2.0",
+    ]
+
+    // Support Libraries
+    supportDependencies = [
+            v4               : "com.android.support:support-v4:${dependVersion.support_lib_version}",
+            appCompat        : "com.android.support:appcompat-v7:${dependVersion.support_lib_version}",
+            cardView         : "com.android.support:cardview-v7:${dependVersion.support_lib_version}",
+            design           : "com.android.support:design:${dependVersion.support_lib_version}",
+            recyclerView     : "com.android.support:recyclerview-v7:${dependVersion.support_lib_version}",
+            supportAnnotation: "com.android.support:support-annotations:${dependVersion.support_lib_version}",
+    ]
+
+    // Support Constraints
+    constraints = [
+            layout: "com.android.support.constraint:constraint-layout:${dependVersion.support_constraint_version}",
+    ]
+
+    // Test
+    tests = [
+            testRunner       : "com.android.support.test:runner:${dependVersion.support_test_version}",
+            testRules        : "com.android.support.test:rules:${dependVersion.support_test_version}",
+            espressoCore     : "com.android.support.test.espresso:espresso-core:${dependVersion.test_espresso_version}",
+            espressoIdlingRes: "com.android.support.test.espresso:espresso-idling-resource:${dependVersion.test_espresso_version}",
+            espressoIntents  : "com.android.support.test.espresso:espresso-intents:${dependVersion.test_espresso_version}",
+            espressoContrib  : "com.android.support.test.espresso:espresso-contrib:${dependVersion.test_espresso_version}",
+            junit            : "junit:junit:${dependVersion.junit_version}",
+    ]
+
+    netDependencies = [
+
+            /*retrofit*/
+            retrofit : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit2_version}",
+            retrofit_adapter_rxjava : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit2_version}",
+            retrofit_converter_gson : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit2_version}",
+
+            /*okHttp*/
+            okhttp3 : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp3_version}",
+            /*rx java*/
+            rx_java : "io.reactivex.rxjava2:rxjava:${dependVersion.rxjava_version}",
+            rx_android : "io.reactivex.rxjava2:rxandroid:${dependVersion.rxandroid_version}",
+
+            okhttp3_logging_interceptor : "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}"
+    ]
+
+    thirdPartyDependencies = [
+            butterknife : "com.jakewharton:butterknife:${dependVersion.butterknife_version}",
+            butterknife_compiler : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife_version}",
+            butterknife_gradle_plugin : "com.jakewharton:butterknife-gradle-plugin:${dependVersion.butterknife_gradle_plugin}",
+
+            /*event bus*/
+            eventbus : "org.greenrobot:eventbus:${dependVersion.eventbus_version}",
+
+            /*沉浸式状态栏 https://github.com/gyf-dev/ImmersionBar*/
+            immersionbar : "com.gyf.immersionbar:immersionbar:${dependVersion.immersionbar_version}",
+
+            /*Multidex*/
+            multidex : "com.android.support:multidex:${dependVersion.multidex_version}",
+
+            okhttp3_logging_interceptor : "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}",
+
+            orhanobut_logger : "com.orhanobut:logger:${dependVersion.logger_version}",
+    ]
 }

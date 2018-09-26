@@ -19,14 +19,12 @@ public class HttpTool {
     }
 
     private HttpTool(Activity context){
-        mWeakReference = new WeakReference<Activity>(context);
-
+        mWeakReference = new WeakReference<>(context);
 
     }
 
     public void clear(){
         mWeakReference.clear();
     }
-
 
 }
