@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 def configs = rootProject.ext.android //android配置
-def thirdPartyDependencies = rootProject.ext.thirdPartyDependencies
+
 buildscript {
     repositories {
         jcenter()
@@ -40,7 +40,7 @@ dependencies {
     def tests = rootProject.ext.tests
     def constraints = rootProject.ext.constraints
     def netDependencies = rootProject.ext.netDependencies
-//    def thirdPartyDependencies = rootProject.ext.thirdPartyDependencies
+    def thirdPartyDependencies = rootProject.ext.thirdPartyDependencies
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
