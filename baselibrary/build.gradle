@@ -19,8 +19,8 @@ android {
     defaultConfig {
         minSdkVersion configs.minSdkVersion
         targetSdkVersion configs.targetSdkVersion
-        versionCode  configs.versionCode
-        versionName  configs.versionName
+        versionCode configs.versionCode
+        versionName configs.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -57,6 +57,9 @@ dependencies {
     api netDependencies.rx_java  // 响应式编程框架
     api netDependencies.rx_android
     api netDependencies.okhttp3
+
+    api netDependencies.okgo
+    api netDependencies.okrx2
 
     api thirdPartyDependencies.orhanobut_logger
     api thirdPartyDependencies.multidex

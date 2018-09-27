@@ -1,9 +1,9 @@
 package com.android.library.retrofitnet;
 
-import com.android.baselibrary.base.AppConfigs;
-import com.android.baselibrary.basenet.BaseRetrofitServiceFactory;
+import com.android.library.AppConfigs;
 import com.android.library.BuildConfig;
 import com.android.library.WeatherData;
+import com.android.baselibrary.retrofitbasenet.BaseRetrofitServiceFactory;
 
 import io.reactivex.Observable;
 import okhttp3.logging.HttpLoggingInterceptor;

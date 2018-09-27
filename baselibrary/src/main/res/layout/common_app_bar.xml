@@ -3,18 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/title_bar"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/margin_12"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/title_height"
     android:background="@color/colorTitleBg"
     android:theme="@style/AppTheme.AppBarOverlay">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+
         <ImageButton
             android:id="@+id/actionbar_back"
             android:layout_width="@dimen/margin_45"
             android:layout_height="match_parent"
             android:background="@null"
+            android:contentDescription="@string/app_name"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_back"/>
         <TextView
@@ -35,9 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/margin_24"
+            android:paddingStart="@dimen/margin_24"
             android:paddingRight="@dimen/margin_12"
+            android:paddingEnd="@dimen/margin_12"
             android:gravity="center"
             android:textColor="@color/colorTitle"
             android:textSize="@dimen/font_size_14"/>
@@ -46,8 +47,10 @@
             android:id="@+id/title_iv_right"
             android:visibility="gone"
             android:layout_width="@dimen/margin_60"
+            android:contentDescription="@string/app_name"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:background="@null"/>
-    </RelativeLayout>
+
 </RelativeLayout>

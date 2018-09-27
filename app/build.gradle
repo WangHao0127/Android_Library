@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 def configs = rootProject.ext.android //android配置
-def releaseTime() {
+static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08"))
 }
 
@@ -76,7 +76,5 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':baselibrary')
-
-
 
 }

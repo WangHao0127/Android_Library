@@ -1,4 +1,4 @@
-package com.android.baselibrary.basenet;
+package com.android.baselibrary.retrofitbasenet;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 
 public class NobodyConverterFactory extends Converter.Factory{
 
-    public static final NobodyConverterFactory create() {
+    static NobodyConverterFactory create() {
         return new NobodyConverterFactory();
     }
 
@@ -32,7 +32,7 @@ public class NobodyConverterFactory extends Converter.Factory{
             //是则创建一个Converter返回转换数据
             return new Converter<ResponseBody, NoBodyEntity>() {
                 @Override
-                public NoBodyEntity convert(ResponseBody value) throws IOException {
+                public NoBodyEntity convert(ResponseBody value) {
                     //这里直接返回null是因为我们不需要使用到响应体,本来也没有响应体.
                     //返回的对象会存到response.body()里.
                     return null;

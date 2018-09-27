@@ -1,4 +1,4 @@
-package com.android.baselibrary.basenet;
+package com.android.baselibrary.retrofitbasenet;
 
 
 
@@ -22,7 +22,7 @@ public class CustomInterceptor implements Interceptor {
         this.headers = headers;
     }
 
-    public CustomInterceptor() {
+    CustomInterceptor() {
 
     }
 
@@ -38,10 +38,10 @@ public class CustomInterceptor implements Interceptor {
         }
 
         //token失效，重新登录
-        Response response = chain.proceed(builder.build());
-        if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {//HTTP Status Code(http状态码) 401
-        }
-        return response;
+//        Response response = chain.proceed(builder.build());
+//        if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {//HTTP Status Code(http状态码) 401
+//        }
+        return chain.proceed(builder.build());
 
     }
 }

@@ -1,4 +1,4 @@
-package com.android.baselibrary.basenet;
+package com.android.baselibrary.retrofitbasenet;
 
 import com.android.baselibrary.base.HttpLogger;
 
@@ -23,11 +23,11 @@ public abstract class BaseRetrofitServiceFactory {
     private static final int DEFAULT_TIMEOUT = 10;
     private static final int RW_TIMEOUT = 20;
 
-    protected Converter.Factory getNobodyConverterFactory(){
+    private Converter.Factory getNobodyConverterFactory() {
         return NobodyConverterFactory.create();
     }
 
-    protected Converter.Factory getConverterFactory() {
+    private Converter.Factory getConverterFactory() {
         Gson gson = new GsonBuilder().serializeNulls().create();
         return GsonConverterFactory.create(gson);
 
@@ -50,14 +50,10 @@ public abstract class BaseRetrofitServiceFactory {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
         Converter.Factory nobodyConverterFactory = getNobodyConverterFactory();
-        if (nobodyConverterFactory!=null){
-            builder.addConverterFactory(nobodyConverterFactory);
-        }
+        builder.addConverterFactory(nobodyConverterFactory);
 
         Converter.Factory converterFactory = getConverterFactory();
-        if (converterFactory != null) {
-            builder.addConverterFactory(converterFactory);
-        }
+        builder.addConverterFactory(converterFactory);
 
         return builder;
     }

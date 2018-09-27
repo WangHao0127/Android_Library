@@ -33,11 +33,13 @@ ext {
             multidex_version          : "1.0.1",
 
             retrofit2_version         : "2.2.0",
-            okhttp3_version           : "3.6.0",
             rxjava_version            : "2.+",
             rxandroid_version         : "2.+",
             okhttp3_version           : "3.6.0",
             logger_version            : "2.2.0",
+
+            okgo_version              : "3.0.4",
+            okrx2_version             : "2.0.2",
     ]
 
     // Support Libraries
@@ -69,35 +71,38 @@ ext {
     netDependencies = [
 
             /*retrofit*/
-            retrofit : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit2_version}",
-            retrofit_adapter_rxjava : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit2_version}",
-            retrofit_converter_gson : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit2_version}",
+            retrofit                   : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit2_version}",
+            retrofit_adapter_rxjava    : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit2_version}",
+            retrofit_converter_gson    : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit2_version}",
 
             /*okHttp*/
-            okhttp3 : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp3_version}",
+            okhttp3                    : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp3_version}",
             /*rx java*/
-            rx_java : "io.reactivex.rxjava2:rxjava:${dependVersion.rxjava_version}",
-            rx_android : "io.reactivex.rxjava2:rxandroid:${dependVersion.rxandroid_version}",
+            rx_java                    : "io.reactivex.rxjava2:rxjava:${dependVersion.rxjava_version}",
+            rx_android                 : "io.reactivex.rxjava2:rxandroid:${dependVersion.rxandroid_version}",
 
-            okhttp3_logging_interceptor : "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}"
+            okhttp3_logging_interceptor: "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}",
+
+            okgo                       : "com.lzy.net:okgo:${dependVersion.okgo_version}",
+            okrx2                      : "com.lzy.net:okrx2:${dependVersion.okrx2_version}"
     ]
 
     thirdPartyDependencies = [
-            butterknife : "com.jakewharton:butterknife:${dependVersion.butterknife_version}",
-            butterknife_compiler : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife_version}",
-            butterknife_gradle_plugin : "com.jakewharton:butterknife-gradle-plugin:${dependVersion.butterknife_gradle_plugin}",
+            butterknife                : "com.jakewharton:butterknife:${dependVersion.butterknife_version}",
+            butterknife_compiler       : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife_version}",
+            butterknife_gradle_plugin  : "com.jakewharton:butterknife-gradle-plugin:${dependVersion.butterknife_gradle_plugin}",
 
             /*event bus*/
-            eventbus : "org.greenrobot:eventbus:${dependVersion.eventbus_version}",
+            eventbus                   : "org.greenrobot:eventbus:${dependVersion.eventbus_version}",
 
             /*沉浸式状态栏 https://github.com/gyf-dev/ImmersionBar*/
-            immersionbar : "com.gyf.immersionbar:immersionbar:${dependVersion.immersionbar_version}",
+            immersionbar               : "com.gyf.immersionbar:immersionbar:${dependVersion.immersionbar_version}",
 
             /*Multidex*/
-            multidex : "com.android.support:multidex:${dependVersion.multidex_version}",
+            multidex                   : "com.android.support:multidex:${dependVersion.multidex_version}",
 
-            okhttp3_logging_interceptor : "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}",
+            okhttp3_logging_interceptor: "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}",
 
-            orhanobut_logger : "com.orhanobut:logger:${dependVersion.logger_version}",
+            orhanobut_logger           : "com.orhanobut:logger:${dependVersion.logger_version}",
     ]
 }

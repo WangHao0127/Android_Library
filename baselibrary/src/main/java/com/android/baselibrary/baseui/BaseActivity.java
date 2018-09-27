@@ -1,5 +1,6 @@
 package com.android.baselibrary.baseui;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.view.Gravity;
 import android.view.View;
@@ -10,11 +11,8 @@ import android.widget.Toast;
 import com.android.baselibrary.R;
 import com.android.baselibrary.base.BaseAppCompatActivity;
 import com.android.baselibrary.basedata.EventBusData;
-import com.android.baselibrary.basenet.HttpTool;
 
 import org.greenrobot.eventbus.EventBus;
-
-import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends BaseAppCompatActivity implements IBaseView {
 
@@ -24,7 +22,7 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
     @Override
     protected void onNavigateClick() {
         if (hasTitleBar()) {
-            ImageButton backView = ButterKnife.findById(this, R.id.actionbar_back);
+            ImageButton backView = findViewById(R.id.actionbar_back);
             if (backView != null) {
                 backView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -39,11 +37,19 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
     @Override
     protected void setCustomTitle(CharSequence title) {
         if (hasTitleBar()) {
-            TextView titleView = ButterKnife.findById(this, R.id.title_tv_message);
+            TextView titleView = findViewById(R.id.title_tv_message);
             if (titleView != null) {
                 titleView.setText(title);
                 setTitle("");
             }
+        }
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        if (hasTitleBar()) {
+            mImmersionBar.titleBar(R.id.title_bar).init();
         }
     }
 
@@ -105,7 +111,8 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
         if (null != msg) {
             if (toast == null) {
                 toast = new Toast(this);
-                View view = getLayoutInflater().inflate(R.layout.toast_view, null);
+                @SuppressLint("InflateParams") View view =
+                    getLayoutInflater().inflate(R.layout.toast_view, null, true);
                 TextView messageTv = view.findViewById(R.id.message_tv);
                 messageTv.setText(msg);
                 toast.setView(view);

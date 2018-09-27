@@ -5,7 +5,6 @@ import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.baseutil.LoggerUtil;
 import com.android.library.retrofitnet.FriendService;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -20,9 +19,13 @@ public class FullActivity extends BaseActivity {
     @Override
     protected void initViewsAndEvents() {
 
-        eventBusPost(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("宝宝快点好"));
+        eventBusPost(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("YES"));
 
-        FriendService.Factory.getFriendService().getWeather().subscribeOn(Schedulers.io())
+        FriendService
+            .Factory
+            .getFriendService()
+            .getWeather()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new DisposableObserver<WeatherData>() {
                 @Override

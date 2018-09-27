@@ -65,23 +65,24 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         /* 获取屏幕信息 */
         getDisplayInfo();
 
-        /* 判断是否使用沉浸式状态栏 */
-        if (isImmersionBarEnabled()) {
-            initImmersionBar();
-        }
-
         if (getContentViewLayoutID() != 0) {
             setContentView(getContentViewLayoutID());
         } else {
             throw new IllegalArgumentException(
                 "You must return a right contentView layout resource Id");
         }
+
+        /* 判断是否使用沉浸式状态栏 */
+        if (isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
+
         if (hasTitleBar()) {
             setCustomTitle(getTitle());
             onNavigateClick();
         }
-        initViewsAndEvents();
 
+        initViewsAndEvents();
     }
 
     protected abstract void eventBusPost(EventBusData data);
@@ -122,7 +123,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     /**
-     * @param extras
+     * @param extras 传递过来的参数
      */
     protected void getBundleExtras(Bundle extras) {}
 

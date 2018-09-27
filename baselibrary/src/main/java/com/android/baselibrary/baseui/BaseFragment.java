@@ -1,12 +1,15 @@
 package com.android.baselibrary.baseui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -17,11 +20,11 @@ import android.widget.Toast;
 
 import com.android.baselibrary.R;
 import com.android.baselibrary.basedata.EventBusData;
-import com.android.baselibrary.basenet.HttpTool;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 
@@ -41,7 +44,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     protected boolean isVisible;
 
-    protected HttpTool httpTool;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -69,22 +71,19 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         return rootView;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         mScreenDensity = displayMetrics.density;
         mScreenHeight = displayMetrics.heightPixels;
         mScreenWidth = displayMetrics.widthPixels;
         initViewsAndEvents();
-    }
-
-    protected void initHttp() {
-        httpTool=HttpTool.newInstance(getActivity());
     }
 
     protected void eventBusPost(EventBusData data) {
@@ -131,10 +130,13 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         showToast(String.format("%s", bool));
     }
 
+    @SuppressLint("DefaultLocale")
     protected void showToast(int number) {
         showToast(String.format("%d", number));
     }
 
+
+    @SuppressLint("ShowToast")
     public void showToast(String msg) {
         if (null != msg) {
             if (mToast == null) {
@@ -167,6 +169,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
      *
      * @param clazz target Activity
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void go(Class<? extends Activity> clazz) {
         _goActivity(clazz, null, NON_CODE, false);
     }
@@ -176,14 +179,17 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
      *
      * @param clazz target Activity
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void go(Class<? extends Activity> clazz, Bundle bundle) {
         _goActivity(clazz, bundle, NON_CODE, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void goForResult(Class<? extends Activity> clazz, int requestCode) {
         _goActivity(clazz, null, requestCode, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void goForResult(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
         _goActivity(clazz, bundle, requestCode, false);
     }
@@ -195,6 +201,8 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
      * @param bundle 传递参数
      * @param finish 是否结束当前activity
      */
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void _goActivity(Class<? extends Activity> clazz, Bundle bundle, int requestCode,
         boolean finish) {
         if (null == clazz) {
@@ -210,14 +218,13 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
             startActivity(intent);
         }
         if (finish) {
-            getActivity().finish();
+            Objects.requireNonNull(getActivity()).finish();
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        httpTool.clear();
         mToast = null;
         hideLoading();
         if (isBindEventBusHere()) {
@@ -239,9 +246,10 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public synchronized void showLoading() {
         if (loadingPop == null) {
-            loadingPop = new Dialog(getActivity(), R.style.NoTitleDialogStyle);
+            loadingPop = new Dialog(Objects.requireNonNull(getActivity()), R.style.NoTitleDialogStyle);
             loadingPop.setContentView(R.layout.popup_loading);
             loadingPop.setCanceledOnTouchOutside(false);
         }

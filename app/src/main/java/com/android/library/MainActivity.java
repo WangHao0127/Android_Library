@@ -1,8 +1,10 @@
 package com.android.library;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.baselibrary.basedata.EventBusData;
@@ -12,6 +14,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
@@ -22,6 +25,14 @@ public class MainActivity extends BaseActivity {
     TextView tv;
     @BindView(R.id.btn)
     Button btn;
+    @BindView(R.id.title_tv_message)
+    TextView titleTvMessage;
+    @BindView(R.id.title_right)
+    TextView titleRight;
+    @BindView(R.id.title_iv_right)
+    ImageButton titleIvRight;
+    @BindView(R.id.title_bar)
+    RelativeLayout titleBar;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setText(EventBusData data) {
@@ -44,6 +55,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
+
+        setCustomTitle("王舒铭");
     }
 
     @OnClick({R.id.btn})
@@ -54,4 +67,5 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
 }

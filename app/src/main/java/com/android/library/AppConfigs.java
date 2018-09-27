@@ -1,4 +1,4 @@
-package com.android.baselibrary.base;
+package com.android.library;
 
 import com.android.baselibrary.BuildConfig;
 
