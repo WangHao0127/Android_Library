@@ -58,9 +58,6 @@ dependencies {
     api netDependencies.rx_android
     api netDependencies.okhttp3
 
-    api netDependencies.okgo
-    api netDependencies.okrx2
-
     api thirdPartyDependencies.orhanobut_logger
     api thirdPartyDependencies.multidex
     api thirdPartyDependencies.butterknife

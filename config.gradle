@@ -37,9 +37,6 @@ ext {
             rxandroid_version         : "2.+",
             okhttp3_version           : "3.6.0",
             logger_version            : "2.2.0",
-
-            okgo_version              : "3.0.4",
-            okrx2_version             : "2.0.2",
     ]
 
     // Support Libraries
@@ -82,9 +79,6 @@ ext {
             rx_android                 : "io.reactivex.rxjava2:rxandroid:${dependVersion.rxandroid_version}",
 
             okhttp3_logging_interceptor: "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}",
-
-            okgo                       : "com.lzy.net:okgo:${dependVersion.okgo_version}",
-            okrx2                      : "com.lzy.net:okrx2:${dependVersion.okrx2_version}"
     ]
 
     thirdPartyDependencies = [

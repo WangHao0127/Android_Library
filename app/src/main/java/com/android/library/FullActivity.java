@@ -3,10 +3,10 @@ package com.android.library;
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.baseutil.LoggerUtil;
+import com.android.baselibrary.retrofitbasenet.MyObserver;
 import com.android.library.retrofitnet.FriendService;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class FullActivity extends BaseActivity {
@@ -27,22 +27,13 @@ public class FullActivity extends BaseActivity {
             .getWeather()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new DisposableObserver<WeatherData>() {
+            .subscribe(new MyObserver<WeatherData>() {
                 @Override
                 public void onNext(WeatherData weatherData) {
-                    showToast(weatherData.getWeatherinfo().getCity());
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    LoggerUtil.d(e.toString());
-                }
-
-                @Override
-                public void onComplete() {
-
+                    LoggerUtil.d(weatherData.getWeatherinfo().getCity());
                 }
             });
+
     }
 
 }

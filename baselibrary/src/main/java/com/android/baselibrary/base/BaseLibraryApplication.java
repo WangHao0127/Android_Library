@@ -18,12 +18,11 @@ public class BaseLibraryApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
     }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
         LoggerUtil.init(BuildConfig.DEBUG);
     }
-
-
 }
