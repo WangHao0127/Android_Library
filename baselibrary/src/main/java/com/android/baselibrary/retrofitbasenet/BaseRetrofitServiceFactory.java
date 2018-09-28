@@ -29,7 +29,7 @@ public abstract class BaseRetrofitServiceFactory {
 
     private Converter.Factory getConverterFactory() {
         Gson gson = new GsonBuilder().serializeNulls().create();
-        return GsonConverterFactory.create(gson);
+        return CustomGsonConverterFactory.create(gson); //CustomGsonConverterFactory 就会导致错误  CustomGsonConverterFactory
 
     }
 

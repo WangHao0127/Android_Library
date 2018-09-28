@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 
 public class NobodyConverterFactory extends Converter.Factory{
 
-    static NobodyConverterFactory create() {
+    public static NobodyConverterFactory create() {
         return new NobodyConverterFactory();
     }
 

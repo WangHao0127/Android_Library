@@ -8,9 +8,9 @@ package com.android.library;
 public class WeatherData {
 
     /**
-     * weatherinfo : {"city":"鍖椾含","cityid":"101010100","temp":"27.9","WD":"鍗楅","WS":"灏忎簬3绾�",
-     * "SD":"28%","AP":"1002hPa","njd":"鏆傛棤瀹炲喌","WSE":"<3","time":"17:55","sm":"2.1",
-     * "isRadar":"1","Radar":"JC_RADAR_AZ9010_JB"}
+     * weatherinfo : {"city":"北京","cityid":"101010100","temp":"27.9","WD":"南风","WS":"小于3级",
+     * "SD":"28%","AP":"1002hPa","njd":"暂无实况","WSE":"<3","time":"17:55","sm":"2.1","isRadar":"1",
+     * "Radar":"JC_RADAR_AZ9010_JB"}
      */
 
     private WeatherinfoBean weatherinfo;
@@ -21,14 +21,14 @@ public class WeatherData {
 
     public static class WeatherinfoBean {
         /**
-         * city : 鍖椾含
+         * city : 北京
          * cityid : 101010100
          * temp : 27.9
-         * WD : 鍗楅
-         * WS : 灏忎簬3绾�
+         * WD : 南风
+         * WS : 小于3级
          * SD : 28%
          * AP : 1002hPa
-         * njd : 鏆傛棤瀹炲喌
+         * njd : 暂无实况
          * WSE : <3
          * time : 17:55
          * sm : 2.1

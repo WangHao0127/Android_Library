@@ -14,6 +14,8 @@ import com.android.baselibrary.baseutil.LoggerUtil;
  */
 public class BaseLibraryApplication extends MultiDexApplication {
 
+    public static Context appContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -22,6 +24,7 @@ public class BaseLibraryApplication extends MultiDexApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        appContext = this;
         MultiDex.install(this);
         LoggerUtil.init(BuildConfig.DEBUG);
     }

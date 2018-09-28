@@ -4,10 +4,7 @@ import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.baseutil.LoggerUtil;
 import com.android.baselibrary.retrofitbasenet.MyObserver;
-import com.android.library.retrofitnet.FriendService;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import com.android.library.dealnet.WeatherSubscribe;
 
 public class FullActivity extends BaseActivity {
 
@@ -21,7 +18,15 @@ public class FullActivity extends BaseActivity {
 
         eventBusPost(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("YES"));
 
-        FriendService
+        WeatherSubscribe.getData(new MyObserver<WeatherData>() {
+
+            @Override
+            public void onNext(WeatherData weatherData) {
+                showToast(weatherData.getWeatherinfo().getCity());
+            }
+        });
+
+      /*  FriendService
             .Factory
             .getFriendService()
             .getWeather()
@@ -30,10 +35,14 @@ public class FullActivity extends BaseActivity {
             .subscribe(new MyObserver<WeatherData>() {
                 @Override
                 public void onNext(WeatherData weatherData) {
-                    LoggerUtil.d(weatherData.getWeatherinfo().getCity());
+                    showToast(weatherData.getWeatherinfo().getCity());
                 }
-            });
+            });*/
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

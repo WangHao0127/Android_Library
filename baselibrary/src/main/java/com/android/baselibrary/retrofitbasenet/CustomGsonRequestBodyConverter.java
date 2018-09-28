@@ -15,10 +15,10 @@ import retrofit2.Converter;
 
 /**
  * Author: WangHao
- * Created On: 2018/9/19 0019 11:22
+ * Created On: 2018/9/28 0028 14:07
  * Description:
  */
-public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+final class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
@@ -26,13 +26,12 @@ public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    GsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    CustomGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }
 
-    @Override
-    public RequestBody convert(T value) throws IOException {
+    @Override public RequestBody convert(T value) throws IOException {
         Buffer buffer = new Buffer();
         Writer writer = new OutputStreamWriter(buffer.outputStream(), UTF_8);
         JsonWriter jsonWriter = gson.newJsonWriter(writer);
@@ -41,3 +40,4 @@ public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
         return RequestBody.create(MEDIA_TYPE, buffer.readByteString());
     }
 }
+
