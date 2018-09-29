@@ -1,11 +1,35 @@
 apply plugin: 'com.android.application'
 def configs = rootProject.ext.android //android配置
+
+def RELEASE_KEY_ALIAS = ''
+def RELEASE_KEY_PWD = ''
+def RELEASE_KEY_STORE_FILE_PATH = ''
+def RELEASE_KEY_STORE_PWD = ''
+
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08"))
 }
 
 def apkFileName(variant, versionName) {
     return "${rootProject.name}-${variant.flavorName}-${variant.buildType.name}-v${versionName}-${releaseTime()}.apk"
+}
+
+task loadSignConfig {
+    File keystorePropertyFile = new File(rootDir.getAbsolutePath() + "/keystore.properties")
+    if (keystorePropertyFile.exists()) {
+        Properties properties = new Properties()
+        properties.load(keystorePropertyFile.newDataInputStream())
+
+        RELEASE_KEY_ALIAS = properties.getProperty('RELEASE_KEY_ALIAS')
+        RELEASE_KEY_PWD = properties.getProperty('RELEASE_KEY_PWD')
+        RELEASE_KEY_STORE_FILE_PATH = rootDir.getAbsolutePath() + properties.getProperty('RELEASE_KEY_STORE_FILE_PATH')
+        RELEASE_KEY_STORE_PWD = properties.getProperty('RELEASE_KEY_STORE_PWD')
+    } else {
+        RELEASE_KEY_ALIAS = System.getenv('RELEASE_KEY_ALIAS')
+        RELEASE_KEY_PWD = System.getenv('RELEASE_KEY_PWD')
+        RELEASE_KEY_STORE_FILE_PATH = System.getenv('RELEASE_KEY_STORE_FILE_PATH')
+        RELEASE_KEY_STORE_PWD = System.getenv('RELEASE_KEY_STORE_PWD')
+    }
 }
 
 android {
@@ -29,9 +53,22 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    signingConfigs {
+        debug {
+            keyAlias "AndroidLibrary"
+            keyPassword "android"
+            storeFile file("../keystore/debug.jks")
+            storePassword "123456"
+        }
+
+        release {
+            loadSignConfig
+
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PWD
+            storeFile file(RELEASE_KEY_STORE_FILE_PATH)
+            storePassword RELEASE_KEY_STORE_PWD
+        }
     }
 
     applicationVariants.all { variant ->
@@ -46,7 +83,11 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard-project.txt'
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles fileTree(dir: '../proguards', include: ['*.pro']).asList().toArray()
+
+            signingConfig signingConfigs.release
             matchingFallbacks = ['release']
         }
         debug {
@@ -69,6 +110,11 @@ android {
             // API基地址
             buildConfigField("String", "BASE_URL", "\"http://${config.APP_BASE_URL}/data/sk/\"")
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

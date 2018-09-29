@@ -17,7 +17,7 @@ public class FullActivity extends BaseActivity {
 
         eventBusPost(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("YES"));
 
-        WeatherSubscribe.getData(new MyObserver<WeatherData>() {
+        WeatherSubscribe.getData(new MyObserver<WeatherData>(this) {
 
             @Override
             public void onNext(WeatherData weatherData) {
@@ -38,10 +38,5 @@ public class FullActivity extends BaseActivity {
                 }
             });*/
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

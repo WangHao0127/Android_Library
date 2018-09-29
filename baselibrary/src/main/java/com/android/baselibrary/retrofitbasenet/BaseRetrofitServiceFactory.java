@@ -11,12 +11,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Author: WangHao
  * Created On: 2018/9/19 0019 15:38
- * Description:
+ * Description: 废弃不用
  */
 public abstract class BaseRetrofitServiceFactory {
 
