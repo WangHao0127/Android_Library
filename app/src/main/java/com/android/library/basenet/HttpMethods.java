@@ -11,7 +11,6 @@ import com.android.library.BuildConfig;
 import com.android.library.dealnet.HttpApi;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
@@ -30,7 +29,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Author: WangHao
@@ -53,41 +51,39 @@ public class HttpMethods {
     private Retrofit retrofit;
     private HttpApi httpApi;
 
-    private HttpMethods(){
+    private HttpMethods() {
         okHttpBuilder = new OkHttpClient.Builder();
         /**
          * 设置缓存
          */
         File
-            cacheFile = new File(BaseLibraryApplication.appContext.getExternalCacheDir(), CACHE_NAME);
+            cacheFile =
+            new File(BaseLibraryApplication.appContext.getExternalCacheDir(), CACHE_NAME);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-        Interceptor cacheInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                if (!NetUtils.isNetworkConnected()) {
-                    request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build();
-                }
-                Response response = chain.proceed(request);
-                if (!NetUtils.isNetworkConnected()) {
-                    int maxAge = 0;
-                    // 有网络时 设置缓存超时时间0个小时
-                    response.newBuilder()
-                        .header("Cache-Control", "public, max-age=" + maxAge)
-                        .removeHeader(CACHE_NAME)// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
-                        .build();
-                } else {
-                    // 无网络时，设置超时为4周
-                    int maxStale = 60 * 60 * 24 * 28;
-                    response.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                        .removeHeader(CACHE_NAME)
-                        .build();
-                }
-                return response;
+        Interceptor cacheInterceptor = chain -> {
+            Request request = chain.request();
+            if (!NetUtils.isNetworkConnected()) {
+                request = request.newBuilder()
+                    .cacheControl(CacheControl.FORCE_CACHE)
+                    .build();
             }
+            Response response = chain.proceed(request);
+            if (!NetUtils.isNetworkConnected()) {
+                int maxAge = 0;
+                // 有网络时 设置缓存超时时间0个小时
+                response.newBuilder()
+                    .header("Cache-Control", "public, max-age=" + maxAge)
+                    .removeHeader(CACHE_NAME)// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+                    .build();
+            } else {
+                // 无网络时，设置超时为4周
+                int maxStale = 60 * 60 * 24 * 28;
+                response.newBuilder()
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                    .removeHeader(CACHE_NAME)
+                    .build();
+            }
+            return response;
         };
         okHttpBuilder.cache(cache).addInterceptor(cacheInterceptor);
 
@@ -96,7 +92,8 @@ public class HttpMethods {
          */
         okHttpBuilder.addInterceptor(new CustomInterceptor());
         //设置 Debug Log 模式
-        okHttpBuilder .addInterceptor(new HttpLoggingInterceptor(new HttpLogger()).setLevel(AppConfigs.HTTP_LOG_LEVEL));
+        okHttpBuilder.addInterceptor(
+            new HttpLoggingInterceptor(new HttpLogger()).setLevel(AppConfigs.HTTP_LOG_LEVEL));
         /**
          * 设置超时和重新连接
          */
@@ -130,18 +127,16 @@ public class HttpMethods {
 
     /**
      * 获取retrofit
-     *
-     * @return
      */
     public Retrofit getRetrofit() {
         return retrofit;
     }
 
-
     public void changeBaseUrl(String baseUrl) {
         retrofit = new Retrofit.Builder()
             .client(okHttpBuilder.build())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(getNobodyConverterFactory())//json转换成JavaBean
+            .addConverterFactory(getConverterFactory())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl(baseUrl)
             .build();
@@ -150,8 +145,6 @@ public class HttpMethods {
 
     /**
      * 获取httpService
-     *
-     * @return
      */
     public HttpApi getHttpApi() {
         return httpApi;

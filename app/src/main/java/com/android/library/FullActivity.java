@@ -2,7 +2,6 @@ package com.android.library;
 
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
-import com.android.baselibrary.baseutil.LoggerUtil;
 import com.android.baselibrary.retrofitbasenet.MyObserver;
 import com.android.library.dealnet.WeatherSubscribe;
 
