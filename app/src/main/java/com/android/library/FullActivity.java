@@ -1,11 +1,13 @@
 package com.android.library;
 
-import android.widget.TextView;
+import android.view.View;
 
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.retrofitbasenet.MyObserver;
 import com.android.library.dealnet.WeatherSubscribe;
+
+import butterknife.OnClick;
 
 public class FullActivity extends BaseActivity {
 
@@ -34,10 +36,19 @@ public class FullActivity extends BaseActivity {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new MyObserver<WeatherData>() {
                 @Override
-                public void onNext(WeatherData weatherData) {
+                public void onNext(WeatherRealm weatherData) {
                     showToast(weatherData.getWeatherinfo().getCity());
                 }
             });*/
 
     }
+
+    @OnClick({R.id.but})
+    void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.but:
+                break;
+        }
+    }
+
 }

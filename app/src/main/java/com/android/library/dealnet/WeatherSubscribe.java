@@ -13,6 +13,7 @@ import io.reactivex.observers.DisposableObserver;
  */
 public class WeatherSubscribe {
 
+
     /**
      * 获取天气数据数据
      */
@@ -20,8 +21,6 @@ public class WeatherSubscribe {
         Observable<WeatherData> observable =  HttpMethods.getInstance().getHttpApi().getWeather();
         HttpMethods.getInstance().toSubscribe(observable, subscriber);
     }
-
-
 
 
 }
