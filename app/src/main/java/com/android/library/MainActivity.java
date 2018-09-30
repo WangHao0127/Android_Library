@@ -1,6 +1,5 @@
 package com.android.library;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -9,13 +8,18 @@ import android.widget.TextView;
 
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.helper.DialogHelper;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 
 public class MainActivity extends BaseActivity {
 
@@ -55,7 +59,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
-
         setCustomTitle("王舒铭");
     }
 
@@ -63,7 +66,27 @@ public class MainActivity extends BaseActivity {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
-                go(FullActivity.class);
+                PermissionUtils.permission(PermissionConstants.STORAGE)
+                    .rationale(DialogHelper::showRationaleDialog)  /*用户之前点了拒绝之后的再次点击*/
+                    /*用户点了同意之后*/
+                    .callback(new PermissionUtils.FullCallback() {
+                        @Override
+                        public void onGranted(List<String> permissionsGranted) {
+                            go(FullActivity.class);
+                            LogUtils.d(permissionsGranted);
+                        }
+
+                        /*用户点了拒绝 ，或者点了rationale弹窗之后的取消*/
+                        @Override
+                        public void onDenied(List<String> permissionsDeniedForever,
+                            List<String> permissionsDenied) {
+                            if (!permissionsDeniedForever.isEmpty()) {
+                                DialogHelper.showOpenAppSettingDialog();
+                            }
+                            LogUtils.d(permissionsDeniedForever, permissionsDenied);
+                        }
+                    })
+                    .request();
                 break;
         }
     }

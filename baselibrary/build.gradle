@@ -65,5 +65,5 @@ dependencies {
     api thirdPartyDependencies.eventbus
     api thirdPartyDependencies.immersionbar
 
-
+    api thirdPartyDependencies.utilcode
 }

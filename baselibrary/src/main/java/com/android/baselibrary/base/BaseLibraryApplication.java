@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.android.baselibrary.BuildConfig;
 import com.android.baselibrary.baseutil.LoggerUtil;
+import com.android.baselibrary.baseutil.MyCrashUtils;
 
 /**
  * Author: WangHao
@@ -27,5 +28,7 @@ public class BaseLibraryApplication extends MultiDexApplication {
         appContext = this;
         MultiDex.install(this);
         LoggerUtil.init(BuildConfig.DEBUG);
+        //=== 崩溃日志相关
+        MyCrashUtils.getInstance().init(appContext);
     }
 }

@@ -37,6 +37,10 @@ ext {
             rxandroid_version         : "2.+",
             okhttp3_version           : "3.6.0",
             logger_version            : "2.2.0",
+
+            utilcode1_version         : "1.20.4",
+
+            recyclerview_version      : "1.0.5"
     ]
 
     // Support Libraries
@@ -98,5 +102,11 @@ ext {
             okhttp3_logging_interceptor: "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp3_version}",
 
             orhanobut_logger           : "com.orhanobut:logger:${dependVersion.logger_version}",
+
+            /*万能工具类*/
+            utilcode                   : "com.blankj:utilcode:${dependVersion.utilcode1_version}",
+
+            /*简单易用强大的RecyclerView库*/
+            recyclerview               : "com.zhouyou:easyrecyclerview:${dependVersion.recyclerview_version}"
     ]
 }
