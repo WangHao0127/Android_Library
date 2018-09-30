@@ -8,8 +8,6 @@ import com.android.baselibrary.BuildConfig;
 import com.android.baselibrary.baseutil.LoggerUtil;
 import com.android.baselibrary.baseutil.MyCrashUtils;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 /**
  * Author: WangHao
@@ -34,17 +32,6 @@ public class BaseLibraryApplication extends MultiDexApplication {
         //=== 崩溃日志相关
         MyCrashUtils.getInstance().init(appContext);
 
-        Realm.init(this);
-        setRealmConfig();
     }
 
-    private void setRealmConfig() {
-        RealmConfiguration config = new RealmConfiguration
-            .Builder()
-            .name("AndroidLibrary.realm")
-            .deleteRealmIfMigrationNeeded()
-            .schemaVersion(1)
-            .build();
-        Realm.setDefaultConfiguration(config);
-    }
 }

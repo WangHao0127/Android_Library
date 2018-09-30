@@ -38,6 +38,7 @@ android {
 
 dependencies {
     //依赖库配置
+    def supportDependencies = rootProject.ext.supportDependencies
     def tests = rootProject.ext.tests
     def constraints = rootProject.ext.constraints
     def netDependencies = rootProject.ext.netDependencies
@@ -47,6 +48,11 @@ dependencies {
 
     //添加了annotationProcessor,否则编译不过
     annotationProcessor thirdPartyDependencies.butterknife_compiler
+
+    api supportDependencies.v4
+    api supportDependencies.cardView
+    api supportDependencies.recyclerView
+    api supportDependencies.BaseRecyclerViewAdapterHelper
 
     api tests.junit
     api constraints.layout

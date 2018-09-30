@@ -40,17 +40,21 @@ ext {
 
             utilcode1_version         : "1.20.4",
 
-            recyclerview_version      : "1.0.5"
+            recyclerview_version      : "1.0.5",
+
+            baserecyclerview_version  : "2.9.30"
     ]
 
     // Support Libraries
     supportDependencies = [
-            v4               : "com.android.support:support-v4:${dependVersion.support_lib_version}",
-            appCompat        : "com.android.support:appcompat-v7:${dependVersion.support_lib_version}",
-            cardView         : "com.android.support:cardview-v7:${dependVersion.support_lib_version}",
-            design           : "com.android.support:design:${dependVersion.support_lib_version}",
-            recyclerView     : "com.android.support:recyclerview-v7:${dependVersion.support_lib_version}",
-            supportAnnotation: "com.android.support:support-annotations:${dependVersion.support_lib_version}",
+            v4                           : "com.android.support:support-v4:${dependVersion.support_lib_version}",
+            appCompat                    : "com.android.support:appcompat-v7:${dependVersion.support_lib_version}",
+            cardView                     : "com.android.support:cardview-v7:${dependVersion.support_lib_version}",
+            design                       : "com.android.support:design:${dependVersion.support_lib_version}",
+            recyclerView                 : "com.android.support:recyclerview-v7:${dependVersion.support_lib_version}",
+            supportAnnotation            : "com.android.support:support-annotations:${dependVersion.support_lib_version}",
+
+            BaseRecyclerViewAdapterHelper: "com.github.CymChad:BaseRecyclerViewAdapterHelper:${dependVersion.baserecyclerview_version}"
     ]
 
     // Support Constraints
