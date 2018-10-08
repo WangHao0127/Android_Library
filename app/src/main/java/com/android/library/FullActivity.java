@@ -2,19 +2,11 @@ package com.android.library;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
-import com.android.baselibrary.helper.CustomLoadMoreView;
-import com.android.baselibrary.retrofitbasenet.MyObserver;
-import com.android.library.dealnet.WeatherSubscribe;
+import com.android.baselibrary.weight.KLRecyclerView;
 import com.android.library.recyclerview.AnimationAdapter;
 import com.android.library.recyclerview.entity.Status;
 
@@ -22,6 +14,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 import static com.android.library.recyclerview.AnimationAdapter.getSampleData;
 
@@ -30,13 +24,11 @@ public class FullActivity extends BaseActivity {
     private static final int PAGE_SIZE = 6;
 
     @BindView(R.id.rv_list)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.swipeLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    KLRecyclerView mRecyclerView;
 
-    private AnimationAdapter mAnimationAdapter;
-    private int mFirstPageItemCount = 3;
+    private AnimationAdapter mDemoAdapter;
     private int mNextRequestPage = 1;
+
     @Override
     protected int getContentViewLayoutID() {
         return R.layout.activity_full;
@@ -44,57 +36,90 @@ public class FullActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
-        eventBusPost(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("YES"));
+        init();
+    }
 
-        WeatherSubscribe.getData(new MyObserver<WeatherData>(this) {
-
-            @Override
-            public void onNext(WeatherData weatherData) {
-                showToast(weatherData.getWeatherinfo().getCity());
-            }
-        });
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void init() {
         initAdapter();
-        addHeadView();
-        mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refresh();
+        mRecyclerView.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 refresh();
             }
         });
-        refresh();
-      /*  FriendService
-            .Factory
-            .getFriendService()
-            .getWeather()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new MyObserver<WeatherData>() {
+    }
+
+    private void initAdapter() {
+        mDemoAdapter = new AnimationAdapter();
+        mRecyclerView.setAdapter(mDemoAdapter);
+
+        mRecyclerView.setHeadView(FullActivity.this, R.layout.head_view);
+        //        mRecyclerView.setFootView(FullActivity.this, R.layout.head_view);
+
+        mRecyclerView.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(FullActivity.this, position + "", Toast.LENGTH_SHORT)
+                    .show();
+            }
+        });
+        mRecyclerView.setOnItemChildClickListener(
+            new BaseQuickAdapter.OnItemChildClickListener() {
                 @Override
-                public void onNext(WeatherRealm weatherData) {
-                    showToast(weatherData.getWeatherinfo().getCity());
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                    String content = null;
+                    Status status = (Status) adapter.getItem(position);
+                    switch (view.getId()) {
+                        case R.id.img:
+                            content = "img:" + status.getUserAvatar();
+                            Toast
+                                .makeText(FullActivity.this, content, Toast.LENGTH_LONG)
+                                .show();
+                            break;
+                        case R.id.tweetName:
+                            content = "name:" + status.getUserName();
+                            Toast
+                                .makeText(FullActivity.this, content, Toast.LENGTH_LONG)
+                                .show();
+                            break;
+                        case R.id.tweetText:
+                            content = "tweetText:" + status.getUserName();
+                            Toast
+                                .makeText(FullActivity.this, content, Toast.LENGTH_LONG)
+                                .show();
+                            break;
+
+                    }
                 }
-            });*/
+            });
+
+        mRecyclerView.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                loadMore();
+            }
+        });
 
     }
 
+
+
     private void refresh() {
         mNextRequestPage = 1;
-        mAnimationAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+        mRecyclerView.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
         new Request(mNextRequestPage, new RequestCallBack() {
             @Override
             public void success(List<Status> data) {
                 setData(true, data);
-                mAnimationAdapter.setEnableLoadMore(true);
-                mSwipeRefreshLayout.setRefreshing(false);
+                mRecyclerView.setEnableLoadMore(true);
+                mRecyclerView.finishRefreshing();
             }
 
             @Override
             public void fail(Exception e) {
-                mAnimationAdapter.setEnableLoadMore(true);
-                mSwipeRefreshLayout.setRefreshing(false);
+                mRecyclerView.setEnableLoadMore(true);
+                mRecyclerView.finishRefreshing();
             }
         }).start();
     }
@@ -103,64 +128,22 @@ public class FullActivity extends BaseActivity {
         mNextRequestPage++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
-            mAnimationAdapter.setNewData(data);
+            mRecyclerView.setNewData(data);
         } else {
             if (size > 0) {
-                mAnimationAdapter.addData(data);
+                mRecyclerView.addData(data);
             }
         }
         if (size < PAGE_SIZE) {
             //第一页如果不够一页就不显示没有更多数据布局
-            mAnimationAdapter.loadMoreEnd(isRefresh);
+            mRecyclerView.loadMoreEnd(isRefresh);
             Toast.makeText(this, "no more data", Toast.LENGTH_SHORT).show();
         } else {
-            mAnimationAdapter.loadMoreComplete();
+            mRecyclerView.loadMoreComplete();
         }
     }
 
 
-    private void addHeadView() {
-        View headView = getLayoutInflater().inflate(R.layout.head_view, (ViewGroup) mRecyclerView.getParent(), false);
-        mAnimationAdapter.addHeaderView(headView);
-    }
-    private void initAdapter() {
-        mAnimationAdapter = new AnimationAdapter();
-        mAnimationAdapter.openLoadAnimation();
-        mAnimationAdapter.setNotDoAnimationCount(mFirstPageItemCount);
-        mAnimationAdapter
-            .setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                @Override
-                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    String content = null;
-                    Status status = (Status) adapter.getItem(position);
-                    switch (view.getId()) {
-                        case R.id.img:
-                            content = "img:" + status.getUserAvatar();
-                            Toast.makeText(FullActivity.this, content, Toast.LENGTH_LONG).show();
-                            break;
-                        case R.id.tweetName:
-                            content = "name:" + status.getUserName();
-                            Toast.makeText(FullActivity.this, content, Toast.LENGTH_LONG).show();
-                            break;
-                        case R.id.tweetText:
-                            content = "tweetText:" + status.getUserName();
-                            Toast.makeText(FullActivity.this, content, Toast.LENGTH_LONG).show();
-                            break;
-
-                    }
-                }
-            });
-        mAnimationAdapter.setLoadMoreView(new CustomLoadMoreView());
-        mRecyclerView.setAdapter(mAnimationAdapter);
-
-        mAnimationAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                loadMore();
-            }
-        });
-
-    }
 
     private void loadMore() {
         new Request(mNextRequestPage, new RequestCallBack() {
@@ -171,12 +154,13 @@ public class FullActivity extends BaseActivity {
 
             @Override
             public void fail(Exception e) {
-                mAnimationAdapter.loadMoreFail();
+                mRecyclerView.loadMoreFail();
             }
         }).start();
     }
-}
 
+
+}
 
 interface RequestCallBack {
     void success(List<Status> data);
@@ -201,7 +185,10 @@ class Request extends Thread {
 
     @Override
     public void run() {
-        try {Thread.sleep(500);} catch (InterruptedException e) {}
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+        }
 
         if (mPage == 2 && mFirstError) {
             mFirstError = false;

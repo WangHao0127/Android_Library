@@ -7,17 +7,8 @@
     android:orientation="vertical"
     tools:context=".FullActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-        <android.support.v7.widget.RecyclerView
+        <com.android.baselibrary.weight.KLRecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fadingEdge="none" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent" />
 </LinearLayout>

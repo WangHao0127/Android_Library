@@ -42,7 +42,9 @@ ext {
 
             recyclerview_version      : "1.0.5",
 
-            baserecyclerview_version  : "2.9.30"
+            baserecyclerview_version  : "2.9.30",
+
+            tkrefreshlayout_version   : "1.0.7"
     ]
 
     // Support Libraries
@@ -110,7 +112,6 @@ ext {
             /*万能工具类*/
             utilcode                   : "com.blankj:utilcode:${dependVersion.utilcode1_version}",
 
-            /*简单易用强大的RecyclerView库*/
-            recyclerview               : "com.zhouyou:easyrecyclerview:${dependVersion.recyclerview_version}"
+            tkrefreshlayout            : "com.lcodecorex:tkrefreshlayout:${dependVersion.tkrefreshlayout_version}"
     ]
 }

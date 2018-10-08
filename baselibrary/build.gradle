@@ -73,4 +73,6 @@ dependencies {
     api thirdPartyDependencies.immersionbar
 
     api thirdPartyDependencies.utilcode
+
+    api thirdPartyDependencies.tkrefreshlayout
 }

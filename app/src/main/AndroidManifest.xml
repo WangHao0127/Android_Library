@@ -18,13 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".FullActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FullActivity">
+        <activity android:name=".FullActivity2">
 
         </activity>
     </application>
