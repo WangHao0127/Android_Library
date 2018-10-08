@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".FullActivity">
 
-        <com.android.baselibrary.weight.KLRecyclerView
+        <com.android.baselibrary.weight.MyRecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

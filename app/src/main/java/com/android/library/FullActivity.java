@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.baselibrary.baseui.BaseActivity;
-import com.android.baselibrary.weight.KLRecyclerView;
+import com.android.baselibrary.weight.MyRecyclerView;
 import com.android.library.recyclerview.AnimationAdapter;
 import com.android.library.recyclerview.entity.Status;
 
@@ -24,7 +24,7 @@ public class FullActivity extends BaseActivity {
     private static final int PAGE_SIZE = 6;
 
     @BindView(R.id.rv_list)
-    KLRecyclerView mRecyclerView;
+    MyRecyclerView mRecyclerView;
 
     private AnimationAdapter mDemoAdapter;
     private int mNextRequestPage = 1;

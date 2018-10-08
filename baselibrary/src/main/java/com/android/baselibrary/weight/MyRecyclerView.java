@@ -26,7 +26,7 @@ import com.lcodecore.tkrefreshlayout.header.SinaRefreshView;
  * Created On: 2018/9/30 0030 17:35
  * Description:
  */
-public class KLRecyclerView<T> extends TwinklingRefreshLayout {
+public class MyRecyclerView<T> extends TwinklingRefreshLayout {
 
     private RecyclerView mRecyclerView;
     private BaseQuickAdapter mAdapter;
@@ -34,16 +34,16 @@ public class KLRecyclerView<T> extends TwinklingRefreshLayout {
 
     private LinearLayout.LayoutParams params;
 
-    public KLRecyclerView(Context context) {
+    public MyRecyclerView(Context context) {
         super(context);
     }
 
-    public KLRecyclerView(Context context, AttributeSet attrs) {
+    public MyRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public KLRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
