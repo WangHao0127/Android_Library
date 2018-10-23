@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android_Library</string>
+    <string name="app" translatable="false">你好吗</string>
 </resources>

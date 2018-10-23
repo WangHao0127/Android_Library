@@ -5,10 +5,13 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.weight.MyRecyclerView;
 import com.android.library.recyclerview.AnimationAdapter;
 import com.android.library.recyclerview.entity.Status;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class FullActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
+        EventBus.getDefault().post(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("王舒铭"));
         init();
     }
 
