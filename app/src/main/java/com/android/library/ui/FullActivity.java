@@ -1,4 +1,4 @@
-package com.android.library;
+package com.android.library.ui;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.weight.MyRecyclerView;
+import com.android.library.R;
 import com.android.library.recyclerview.AnimationAdapter;
 import com.android.library.recyclerview.entity.Status;
 
