@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.android.library.ui.PickerActivity">
 
-    <include layout="@layout/common_app_bar"/>
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app"
-        />
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="权限测试&amp;RecyclerView"
+        android:text="省市区选择器"
         />
     <Button
         android:id="@+id/btn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="时间和省市区选择器"
+        android:text="时间选择器"
         />
 </LinearLayout>

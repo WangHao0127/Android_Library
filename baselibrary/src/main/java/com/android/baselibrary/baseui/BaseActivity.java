@@ -50,6 +50,10 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
         super.initImmersionBar();
         if (hasTitleBar()) {
             mImmersionBar.titleBar(R.id.title_bar).init();
+        } else {
+            if (!isStatusBarOverlap()) {
+                mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.colorWhite).init();
+            }
         }
     }
 

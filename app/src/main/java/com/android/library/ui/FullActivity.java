@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
-import com.android.baselibrary.weight.MyRecyclerView;
+import com.android.baselibrary.weight.recv.MyRecyclerView;
 import com.android.library.R;
 import com.android.library.recyclerview.AnimationAdapter;
 import com.android.library.recyclerview.entity.Status;
@@ -34,13 +34,19 @@ public class FullActivity extends BaseActivity {
     private int mNextRequestPage = 1;
 
     @Override
+    protected boolean isStatusBarOverlap() {
+        return true;
+    }
+
+    @Override
     protected int getContentViewLayoutID() {
         return R.layout.activity_full;
     }
 
     @Override
     protected void initViewsAndEvents() {
-        EventBus.getDefault().post(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("王舒铭"));
+        EventBus.getDefault()
+            .post(EventBusData.Action.DELETE_ALL_MESSAGE_IN_SESSION.createEventBusData("王舒铭"));
         init();
     }
 
@@ -108,8 +114,6 @@ public class FullActivity extends BaseActivity {
 
     }
 
-
-
     private void refresh() {
         mNextRequestPage = 1;
         mRecyclerView.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
@@ -148,8 +152,6 @@ public class FullActivity extends BaseActivity {
         }
     }
 
-
-
     private void loadMore() {
         new Request(mNextRequestPage, new RequestCallBack() {
             @Override
@@ -163,7 +165,6 @@ public class FullActivity extends BaseActivity {
             }
         }).start();
     }
-
 
 }
 

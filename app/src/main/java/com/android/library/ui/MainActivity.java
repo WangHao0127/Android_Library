@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
         setCustomTitle("王舒铭");
     }
 
-    @OnClick({R.id.btn})
+    @OnClick({R.id.btn, R.id.btn2})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -88,6 +88,9 @@ public class MainActivity extends BaseActivity {
                         }
                     })
                     .request();
+                break;
+            case R.id.btn2:
+                go(PickerActivity.class);
                 break;
         }
     }

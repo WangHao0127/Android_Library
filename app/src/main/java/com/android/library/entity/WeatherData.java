@@ -1,4 +1,4 @@
-package com.android.library;
+package com.android.library.entity;
 
 /**
  * Author: WangHao

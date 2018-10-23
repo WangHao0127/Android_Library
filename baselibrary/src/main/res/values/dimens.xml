@@ -19,11 +19,11 @@
     <!--按钮高度-->
     <dimen name="button_height">50dp</dimen>
     <!--标题高度-->
-    <dimen name="title_height">55dp</dimen>
+    <dimen name="title_height">45dp</dimen>
     <!--内容区域左右边距-->
     <dimen name="margin_12">12dp</dimen>
     <!--分割线高度-->
-    <dimen name="dis_0.5">0.5dp</dimen>
+    <dimen name="dis_05">0.5dp</dimen>
 
     <!--一般边距-->
     <dimen name="margin_1">1dp</dimen>
@@ -71,4 +71,14 @@
     <dimen name="margin_90">90dp</dimen>
     <dimen name="margin_95">95dp</dimen>
     <dimen name="qr_size_280">280dp</dimen>
+
+    <!-- 选项文字大小 -->
+    <dimen name="pickerview_textsize">20sp</dimen>
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- 顶部按钮padding -->
+    <dimen name="pickerview_topbar_padding">20dp</dimen>
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">17sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">18sp</dimen>
 </resources>

@@ -1,9 +1,8 @@
 package com.android.library.dealnet;
 
-import com.android.library.WeatherData;
+import com.android.library.entity.WeatherData;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 
 /**

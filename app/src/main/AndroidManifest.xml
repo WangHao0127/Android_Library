@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.library">
 
-
-
     <!--
       android:resizeableActivity="true"
           解决全面屏上下部分留黑或留白问题
@@ -25,9 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.FullActivity">
-
         </activity>
-
+        <activity android:name=".ui.PickerActivity">
+        </activity>
     </application>
 
 </manifest>

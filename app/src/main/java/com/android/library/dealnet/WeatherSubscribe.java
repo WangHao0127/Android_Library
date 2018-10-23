@@ -1,6 +1,6 @@
 package com.android.library.dealnet;
 
-import com.android.library.WeatherData;
+import com.android.library.entity.WeatherData;
 import com.android.library.basenet.HttpMethods;
 
 import io.reactivex.Observable;

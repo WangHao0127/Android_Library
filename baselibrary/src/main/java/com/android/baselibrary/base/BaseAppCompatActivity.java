@@ -116,6 +116,15 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     /**
+     * 是否和状态栏重叠：默认不重叠
+     *
+     * @return the boolean
+     */
+    protected boolean isStatusBarOverlap() {
+        return false;
+    }
+
+    /**
      * 是否注册EventBus
      */
     protected boolean isBindEventBusHere() {
@@ -155,7 +164,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
         if (ImmersionBar.isSupportStatusBarDarkFont()) {
-            mImmersionBar.statusBarDarkFont(true,0.2f).keyboardEnable(true).init();
+            mImmersionBar.statusBarDarkFont(true, 0.2f).keyboardEnable(true).init();
         }
     }
 

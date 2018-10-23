@@ -97,14 +97,14 @@ android {
         }
 
         // 开发环境
-        stagingDebug{
+        stagingDebug {
             initWith debug
 
             // API基地址
             buildConfigField("String", "BASE_URL", "\"http://${config.APP_BASE_URL}/data/sk/\"")
         }
 
-        stagingRelease{
+        stagingRelease {
             initWith release
 
             // API基地址
@@ -123,4 +123,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':baselibrary')
 
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

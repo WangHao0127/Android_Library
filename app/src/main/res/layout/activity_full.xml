@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <com.android.baselibrary.weight.MyRecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <com.android.baselibrary.weight.recv.MyRecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

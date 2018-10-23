@@ -1,4 +1,4 @@
-package com.android.baselibrary.weight;
+package com.android.baselibrary.weight.recv;
 
 import android.app.Activity;
 import android.content.Context;
