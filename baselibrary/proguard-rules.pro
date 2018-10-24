@@ -20,4 +20,18 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+#  1.动态权限(工具类)；
+#  2.RecyclerView(封装，适配器)
+#  3.EventBus(封装)
+#  4.时间，省市区的选择器
+#  5.沉浸式状态栏
+#  6.版本更新框架
+#
+#
+#
+#
+#
+#
+#
+
 -keep class com.gyf.barlibrary.* {*;}

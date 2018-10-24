@@ -18,12 +18,14 @@ package com.android.baselibrary.baseutil;
 import android.content.Context;
 
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -62,6 +64,21 @@ public class JsonUtil {
         return list;
     }
 
+    /**
+     * 解析Json字符串
+     * @param json Json字符串
+     * @param typeOfT 泛型类
+     * @param <T>
+     * @return
+     */
+    public static <T> T fromJson(String json, Type typeOfT) {
+        try {
+            return new Gson().fromJson(json, typeOfT);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * Json转List集合,遇到解析不了的，就使用这个

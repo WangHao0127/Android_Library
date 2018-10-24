@@ -75,4 +75,7 @@ dependencies {
     api thirdPartyDependencies.utilcode
 
     api thirdPartyDependencies.tkrefreshlayout
+
+    api thirdPartyDependencies.XUpdate
+    api thirdPartyDependencies.okhttp_utils
 }

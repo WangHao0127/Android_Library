@@ -9,7 +9,10 @@ import android.widget.TextView;
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.helper.DialogHelper;
+import com.android.baselibrary.retrofitbasenet.MyObserver;
 import com.android.library.R;
+import com.android.library.dealnet.WeatherSubscribe;
+import com.android.library.entity.WeatherData;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -61,9 +64,17 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initViewsAndEvents() {
         setCustomTitle("王舒铭");
+
+        WeatherSubscribe.getData(new MyObserver<WeatherData>(this) {
+
+            @Override
+            public void onNext(WeatherData weatherData) {
+                showToast(weatherData.getWeatherinfo().getCity());
+            }
+        });
     }
 
-    @OnClick({R.id.btn, R.id.btn2})
+    @OnClick({R.id.btn, R.id.btn2, R.id.btn3})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -91,6 +102,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn2:
                 go(PickerActivity.class);
+                break;
+            case R.id.btn3:
+                go(XUpdateActivity.class);
                 break;
         }
     }
