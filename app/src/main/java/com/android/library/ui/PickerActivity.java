@@ -1,35 +1,32 @@
 package com.android.library.ui;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
-import android.view.Gravity;
+import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.android.baselibrary.baseui.BaseActivity;
-import com.android.baselibrary.weight.picker.builder.OptionsPickerBuilder;
+import com.android.baselibrary.weight.picker.entity.JsonBean;
 import com.android.baselibrary.weight.picker.listener.OnOptionsSelectListener;
+import com.android.baselibrary.weight.picker.listener.OnTimeSelectListener;
 import com.android.baselibrary.weight.picker.util.GetJsonDataUtil;
 import com.android.baselibrary.weight.picker.util.PickerUtils;
 import com.android.baselibrary.weight.picker.view.OptionsPickerView;
 import com.android.baselibrary.weight.picker.view.TimePickerView;
 import com.android.library.R;
-import com.android.library.entity.JsonBean;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.google.gson.Gson;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.android.baselibrary.weight.picker.util.PickerUtils.parseData;
 
 public class PickerActivity extends BaseActivity {
 
@@ -39,46 +36,11 @@ public class PickerActivity extends BaseActivity {
     private ArrayList<JsonBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
-    private Thread thread;
-    private static final int MSG_LOAD_DATA = 0x0001;
-    private static final int MSG_LOAD_SUCCESS = 0x0002;
-    private static final int MSG_LOAD_FAILED = 0x0003;
 
     private boolean isLoaded = false;
 
     private TimePickerView mTimePickerView;
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_LOAD_DATA:
-                    if (thread == null) {//如果已创建就不再重新创建子线程了
-
-                        Toast.makeText(PickerActivity.this, "Begin Parse Data", Toast.LENGTH_SHORT)
-                            .show();
-                        thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // 子线程中解析省市区数据
-                                initJsonData();
-                            }
-                        });
-                        thread.start();
-                    }
-                    break;
-
-                case MSG_LOAD_SUCCESS:
-                    Toast.makeText(PickerActivity.this, "Parse Succeed", Toast.LENGTH_SHORT).show();
-                    isLoaded = true;
-                    break;
-
-                case MSG_LOAD_FAILED:
-                    Toast.makeText(PickerActivity.this, "Parse Failed", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
+    private OptionsPickerView mOptionsPickerView;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -87,8 +49,53 @@ public class PickerActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
-        mHandler.sendEmptyMessage(MSG_LOAD_DATA);
-        mTimePickerView = PickerUtils.showTimePicker(this);
+        mTimePickerView = PickerUtils.showTimePicker(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                Toast.makeText(PickerActivity.this, PickerUtils.getTime(date), Toast.LENGTH_SHORT)
+                    .show();
+            }
+        });
+
+        //子线程解析省市区的json数据
+        Observable
+            .create((ObservableOnSubscribe<Boolean>) emitter -> emitter
+                .onNext(initJsonData()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new DisposableObserver<Boolean>() {
+                @Override
+                public void onNext(Boolean aBoolean) {
+                    isLoaded = true;
+                    Toast.makeText(PickerActivity.this, "Parse Succeed", Toast.LENGTH_SHORT).show();
+
+                    mOptionsPickerView = PickerUtils
+                        .showPickerView(PickerActivity.this, new OnOptionsSelectListener() {
+                            @Override
+                            public void onOptionsSelect(int options1, int options2, int options3,
+                                View v) {
+                                //返回的分别是三个级别的选中位置
+                                String tx = options1Items.get(options1).getPickerViewText() +
+                                            options2Items.get(options1).get(options2) +
+                                            options3Items.get(options1).get(options2).get(options3);
+
+                                Toast.makeText(PickerActivity.this, tx, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    mOptionsPickerView
+                        .setPicker(options1Items, options2Items, options3Items);//三级选择器
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Toast.makeText(PickerActivity.this, "Parse Failed", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
     }
 
     @OnClick({R.id.btn1, R.id.btn2})
@@ -96,7 +103,7 @@ public class PickerActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn1:
                 if (isLoaded) {
-                    showPickerView();
+                    mOptionsPickerView.show(v);
                 } else {
                     Toast.makeText(PickerActivity.this, "Please waiting until the data is parsed",
                         Toast.LENGTH_SHORT).show();
@@ -108,54 +115,7 @@ public class PickerActivity extends BaseActivity {
         }
     }
 
-    private void showPickerView() {// 弹出选择器
-
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText() +
-                            options2Items.get(options1).get(options2) +
-                            options3Items.get(options1).get(options2).get(options3);
-
-                Toast.makeText(PickerActivity.this, tx, Toast.LENGTH_SHORT).show();
-            }
-        })
-
-            .setTitleText("城市选择")
-            .setDividerColor(Color.BLACK)
-            .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-            .setContentTextSize(20)
-            .isDialog(true)
-            .build();
-
-        Dialog mDialog = pvOptions.getDialog();
-        if (mDialog != null) {
-
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                Gravity.BOTTOM);
-
-            params.leftMargin = 0;
-            params.rightMargin = 0;
-            pvOptions.getDialogContainerLayout().setLayoutParams(params);
-
-            Window dialogWindow = mDialog.getWindow();
-            if (dialogWindow != null) {
-                dialogWindow.setWindowAnimations(
-                    com.android.baselibrary.R.style.picker_view_slide_anim);//修改动画样式
-                dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
-            }
-        }
-
-        /*pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
-        pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
-        pvOptions.show();
-    }
-
-    private void initJsonData() {//解析数据
+    public boolean initJsonData() {//解析数据
 
         /**
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
@@ -163,7 +123,8 @@ public class PickerActivity extends BaseActivity {
          *
          * */
         String JsonData =
-            new GetJsonDataUtil().getJson(this, "province.json");//获取assets目录下的json文件数据
+            new GetJsonDataUtil()
+                .getJson(PickerActivity.this, "province.json");//获取assets目录下的json文件数据
 
         ArrayList<JsonBean> jsonBean = parseData(JsonData);//用Gson 转成实体
 
@@ -204,32 +165,6 @@ public class PickerActivity extends BaseActivity {
              */
             options3Items.add(Province_AreaList);
         }
-
-        mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
-
-    }
-
-    public ArrayList<JsonBean> parseData(String result) {//Gson 解析
-        ArrayList<JsonBean> detail = new ArrayList<>();
-        try {
-            JSONArray data = new JSONArray(result);
-            Gson gson = new Gson();
-            for (int i = 0; i < data.length(); i++) {
-                JsonBean entity = gson.fromJson(data.optJSONObject(i).toString(), JsonBean.class);
-                detail.add(entity);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            mHandler.sendEmptyMessage(MSG_LOAD_FAILED);
-        }
-        return detail;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
+        return true;
     }
 }

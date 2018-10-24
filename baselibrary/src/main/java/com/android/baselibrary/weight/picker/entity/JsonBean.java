@@ -1,9 +1,8 @@
-package com.android.library.entity;
+package com.android.baselibrary.weight.picker.entity;
 
 import com.android.baselibrary.weight.picker.IPickerViewData;
 
 import java.util.List;
-
 
 /**
  * TODO<json数据源>
