@@ -121,6 +121,8 @@ ext {
             /*XUpdate版本更新框架 http://www.apkbus.com/thread-601860-1-1.html*/
             XUpdate                    : "com.github.xuexiangjys:XUpdate:${dependVersion.xupdate}",
             /*okhttp的工具类，为更新框架而存在*/
-            okhttp_utils               : "com.qianwen:okhttp-utils:${dependVersion.okhttp_utils}"
+            okhttp_utils               : "com.qianwen:okhttp-utils:${dependVersion.okhttp_utils}",
+            /*Glide封装，ImageView自定义*/
+            glideImageView             : "com.sunfusheng:GlideImageView:+"
     ]
 }

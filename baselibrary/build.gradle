@@ -40,7 +40,7 @@ dependencies {
     //依赖库配置
     def supportDependencies = rootProject.ext.supportDependencies
     def tests = rootProject.ext.tests
-    def constraints = rootProject.ext.constraints
+//    def constraints = rootProject.ext.constraints
     def netDependencies = rootProject.ext.netDependencies
     def thirdPartyDependencies = rootProject.ext.thirdPartyDependencies
 
@@ -55,7 +55,7 @@ dependencies {
     api supportDependencies.BaseRecyclerViewAdapterHelper
 
     api tests.junit
-    api constraints.layout
+//    api constraints.layout
 
     api netDependencies.retrofit  // 针对Android和Java类型安全的http客户端
     api netDependencies.retrofit_adapter_rxjava  // 使Retrofit支持RxJava
@@ -78,4 +78,6 @@ dependencies {
 
     api thirdPartyDependencies.XUpdate
     api thirdPartyDependencies.okhttp_utils
+
+    api thirdPartyDependencies.glideImageView
 }

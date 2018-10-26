@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.library">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <!--
       android:resizeableActivity="true"
           解决全面屏上下部分留黑或留白问题
@@ -30,6 +32,10 @@
         </activity>
         <activity android:name=".ui.XUpdateActivity">
         </activity>
+        <activity android:name=".ui.ImageActivity">
+        </activity>
+        <activity android:name=".ui.NineImageViewActivity" />
+
     </application>
 
 </manifest>

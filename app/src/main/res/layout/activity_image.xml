@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.android.library.ui.ImageActivity">
+
+    <com.sunfusheng.GlideImageView
+        android:id="@+id/img1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        />
+    <com.sunfusheng.GlideImageView
+        android:id="@+id/img2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        />
+    <com.sunfusheng.GlideImageView
+        android:id="@+id/img3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+        <com.sunfusheng.GlideImageView
+            android:id="@+id/image31"
+            android:layout_width="240dp"
+            android:layout_height="135dp"
+            android:transitionName="the image of transition"/>
+
+        <com.sunfusheng.progress.CircleProgressView
+            android:id="@+id/progressView1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:progress="0"
+            android:visibility="gone"
+            app:cpv_innerPadding="2dp"
+            app:cpv_outerColor="#E5ffffff"
+            app:cpv_outerSize="1dp"
+            app:cpv_progressNormalColor="#00000000"
+            app:cpv_progressReachColor="#E5ffffff"
+            app:cpv_progressStyle="FillInnerArc"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="九宫格"
+        />
+</LinearLayout>

@@ -122,6 +122,4 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':baselibrary')
-
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }
