@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.btn, R.id.btn2, R.id.btn3, R.id.btn4})
+    @OnClick({R.id.btn, R.id.btn2, R.id.btn3, R.id.btn4,R.id.btn5})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -108,6 +108,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn4:
                 go(ImageActivity.class);
+                break;
+            case R.id.btn5:
+                go(MapActivity.class);
                 break;
         }
     }
