@@ -1,6 +1,9 @@
 package com.android.library.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.baselibrary.baseui.BaseActivity;
@@ -12,13 +15,13 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
 import com.blankj.utilcode.constant.PermissionConstants;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 
 public class MapActivity extends BaseActivity {
@@ -28,6 +31,20 @@ public class MapActivity extends BaseActivity {
 
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
+
+    private AMapLocation mLocation;
+
+    @OnClick({R.id.btn})
+    void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn:
+                Intent intent = new Intent(this, MapShowActivity.class);
+                intent.putExtra("Longitude", mLocation.getLongitude());
+                intent.putExtra("Latitude", mLocation.getLatitude());
+                startActivity(intent);
+                break;
+        }
+    }
 
     @Override
     protected int getContentViewLayoutID() {
@@ -80,7 +97,7 @@ public class MapActivity extends BaseActivity {
      */
     AMapLocationListener locationListener = location -> {
         if (null != location) {
-
+            mLocation = location;
             StringBuffer sb = new StringBuffer();
             //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
             if (location.getErrorCode() == 0) {
@@ -142,12 +159,12 @@ public class MapActivity extends BaseActivity {
 
     /**
      * 获取GPS状态的字符串
+     *
      * @param statusCode GPS状态码
-     * @return
      */
-    private String getGPSStatusString(int statusCode){
+    private String getGPSStatusString(int statusCode) {
         String str = "";
-        switch (statusCode){
+        switch (statusCode) {
             case AMapLocationQualityReport.GPS_STATUS_OK:
                 str = "GPS状态正常";
                 break;
@@ -242,7 +259,8 @@ public class MapActivity extends BaseActivity {
     }
 
     private static SimpleDateFormat sdf = null;
-    public  static String formatUTC(long l, String strPattern) {
+
+    public static String formatUTC(long l, String strPattern) {
         if (TextUtils.isEmpty(strPattern)) {
             strPattern = "yyyy-MM-dd HH:mm:ss";
         }
