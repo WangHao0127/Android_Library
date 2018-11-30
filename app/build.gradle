@@ -63,13 +63,11 @@ android {
             storeFile file("../keystore/debug.jks")
             storePassword "123456"
         }
-
         release {
             loadSignConfig
-
             keyAlias RELEASE_KEY_ALIAS
             keyPassword RELEASE_KEY_PWD
-            storeFile file(RELEASE_KEY_STORE_FILE_PATH)
+            storeFile file('F:/ASProject/WH/keystore/LibraryKey.jks')
             storePassword RELEASE_KEY_STORE_PWD
         }
     }
@@ -122,18 +120,16 @@ android {
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':baselibrary')
-
     /*高德地图---定位*/
     implementation 'com.amap.api:location:latest.integration'
     /*高德地图---搜索*/
-//    implementation 'com.amap.api:search:latest.integration'
+    //    implementation 'com.amap.api:search:latest.integration'
     /*高德地图---导航*/
-//    implementation 'com.amap.api:navi-3dmap:latest.integration'
+    //    implementation 'com.amap.api:navi-3dmap:latest.integration'
     /*高德地图---2D地图*/
-//    implementation 'com.amap.api:map2d:latest.integration'
+    //    implementation 'com.amap.api:map2d:latest.integration'
     /*高德地图---3D地图*/
     implementation 'com.amap.api:3dmap:latest.integration'
 }

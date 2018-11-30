@@ -26,12 +26,24 @@
 #  4.时间，省市区的选择器
 #  5.沉浸式状态栏
 #  6.版本更新框架
-#
-#
+#  7.高德地图定位以及地图展示
+#  8.Glide以及图片的集成封装
 #
 #
 #
 #
 #
 
+# 沉浸式状态栏
 -keep class com.gyf.barlibrary.* {*;}
+
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+# OkHttp3
+-dontwarn okhttp3.logging.**
+-keep class okhttp3.internal.**{*;}
+# okhttp
+-dontwarn okio.**
+
+# XUpdate
+-keep class com.xuexiang.xupdate.entity.** { *; }

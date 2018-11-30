@@ -28,5 +28,8 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
-
+# Gson
+-keep class com.google.gson.stream.** { *; }
+-keepattributes EnclosingMethod
+-keep class com.android.library.entity.**{*;} # 自定义数据模型的bean目录
 

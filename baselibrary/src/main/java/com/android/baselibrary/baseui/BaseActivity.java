@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.android.baselibrary.R;
 import com.android.baselibrary.base.BaseAppCompatActivity;
 import com.android.baselibrary.basedata.EventBusData;
+import com.gyf.barlibrary.ImmersionBar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -102,6 +103,8 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
             toast.cancel();
         }
         hideLoading();
+        // 必须调用该方法，防止内存泄漏
+        ImmersionBar.with(this).destroy();
         super.onPause();
     }
 

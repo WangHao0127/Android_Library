@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#定位
+-keepclass com.amap.api.location.**{*;}
+-keepclass com.loc.**{*;}
+-keepclass com.amap.api.fence.**{*;}
+-keepclass com.autonavi.aps.amapapi.model.**{*;}
+#3D 地图
+-keepclass com.amap.api.mapcore.**{*;}
+-keepclass com.amap.api.maps.**{*;}
+-keepclass com.autonavi.amap.mapcore.*{*;}
+
