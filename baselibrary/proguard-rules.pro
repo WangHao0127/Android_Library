@@ -32,18 +32,3 @@
 #
 #
 #
-#
-
-# 沉浸式状态栏
--keep class com.gyf.barlibrary.* {*;}
-
--dontwarn javax.annotation.**
--dontwarn javax.inject.**
-# OkHttp3
--dontwarn okhttp3.logging.**
--keep class okhttp3.internal.**{*;}
-# okhttp
--dontwarn okio.**
-
-# XUpdate
--keep class com.xuexiang.xupdate.entity.** { *; }

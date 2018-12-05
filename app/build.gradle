@@ -67,7 +67,7 @@ android {
             loadSignConfig
             keyAlias RELEASE_KEY_ALIAS
             keyPassword RELEASE_KEY_PWD
-            storeFile file('F:/ASProject/WH/keystore/LibraryKey.jks')
+            storeFile file("../keystore/LibraryKey.jks")
             storePassword RELEASE_KEY_STORE_PWD
         }
     }
