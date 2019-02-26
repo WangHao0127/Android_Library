@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.library.R;
 import com.android.library.utils.CProgressDialogUtils;
 import com.android.library.utils.CustomUpdateParser;
@@ -127,4 +128,8 @@ public class XUpdateActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 }

@@ -3,6 +3,7 @@ package com.android.library.ui;
 import android.view.View;
 
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.library.R;
 
 import butterknife.BindView;
@@ -64,7 +65,7 @@ public class ImageActivity extends BaseActivity {
 
         img1.enableState(true).load(url1);
         img2.loadCircle(url1);
-        img3.load(url2, R.drawable.ic_arrow, 10);
+      /*  img3.load(url2, R.drawable.ic_arrow, 10);
 
         image31.centerCrop().error(R.mipmap.image_load_err)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -75,7 +76,7 @@ public class ImageActivity extends BaseActivity {
                     progressView1.setVisibility(View.VISIBLE);
                     progressView1.setProgress(percentage);
                 }
-            });
+            });*/
 
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,4 +86,8 @@ public class ImageActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 }

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.baselibrary.weight.recv.MyRecyclerView;
 import com.android.library.R;
 import com.android.library.recyclerview.AnimationAdapter;
@@ -166,6 +167,10 @@ public class FullActivity extends BaseActivity {
         }).start();
     }
 
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 }
 
 interface RequestCallBack {

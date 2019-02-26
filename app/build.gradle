@@ -42,7 +42,7 @@ android {
         targetSdkVersion configs.targetSdkVersion
         versionCode configs.versionCode
         versionName configs.versionName
-
+        multiDexEnabled true
         //butterKnife引发的error
         javaCompileOptions {
             annotationProcessorOptions {

@@ -57,7 +57,7 @@
         <service android:name="com.amap.api.location.APSService" />
         <!-- 高德地图配置 end -->
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name="com.android.library.home.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

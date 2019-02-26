@@ -3,6 +3,7 @@ package com.android.library.ui;
 import android.os.Bundle;
 
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.library.R;
 
 import butterknife.BindView;
@@ -67,6 +68,11 @@ public class MapShowActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     /**

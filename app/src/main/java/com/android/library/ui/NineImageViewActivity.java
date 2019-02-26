@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.library.R;
 import com.android.library.entity.ImageModel;
 import com.android.library.utils.ModelUtil;
@@ -40,6 +41,11 @@ public class NineImageViewActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, ModelUtil.getImages());
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {

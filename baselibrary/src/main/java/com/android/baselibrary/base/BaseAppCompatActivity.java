@@ -35,9 +35,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected ImmersionBar mImmersionBar;
     private InputMethodManager imm;
 
+    public Context mContext;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         TAG = this.getClass().getSimpleName();
+        mContext = BaseAppCompatActivity.this;
+
         /*设定屏幕方向为垂直*/
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -82,8 +86,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             onNavigateClick();
         }
 
+        initPresenter();
         initViewsAndEvents();
+
     }
+
+    protected abstract void initPresenter();
 
     protected abstract void eventBusPost(EventBusData data);
 

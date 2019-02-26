@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.baselibrary.weight.picker.entity.JsonBean;
 import com.android.baselibrary.weight.picker.listener.OnOptionsSelectListener;
 import com.android.baselibrary.weight.picker.listener.OnTimeSelectListener;
@@ -166,5 +167,10 @@ public class PickerActivity extends BaseActivity {
             options3Items.add(Province_AreaList);
         }
         return true;
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 }

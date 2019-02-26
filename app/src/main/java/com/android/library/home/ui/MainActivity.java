@@ -1,4 +1,4 @@
-package com.android.library.ui;
+package com.android.library.home.ui;
 
 import android.view.View;
 import android.widget.Button;
@@ -9,10 +9,15 @@ import android.widget.TextView;
 import com.android.baselibrary.basedata.EventBusData;
 import com.android.baselibrary.baseui.BaseActivity;
 import com.android.baselibrary.helper.DialogHelper;
-import com.android.baselibrary.retrofitbasenet.MyObserver;
 import com.android.library.R;
-import com.android.library.dealnet.WeatherSubscribe;
 import com.android.library.entity.WeatherData;
+import com.android.library.home.contract.WeatherContract;
+import com.android.library.home.presenter.WeatherPresenter;
+import com.android.library.ui.FullActivity;
+import com.android.library.ui.ImageActivity;
+import com.android.library.ui.MapActivity;
+import com.android.library.ui.PickerActivity;
+import com.android.library.ui.XUpdateActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,7 +30,8 @@ import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<WeatherContract.WeatherView, WeatherPresenter>
+    implements WeatherContract.WeatherView {
 
     @BindView(R.id.actionbar_back)
     ImageButton actionbarBack;
@@ -52,6 +58,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected WeatherPresenter createPresenter() {
+        return new WeatherPresenter();
+    }
+
+    @Override
     protected boolean isBindEventBusHere() {
         return true;
     }
@@ -64,17 +75,18 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initViewsAndEvents() {
         setCustomTitle("王舒铭");
-
-        WeatherSubscribe.getData(new MyObserver<WeatherData>(this) {
+        mPresenter.getWeatherInfo(this);
+       /* WeatherSubscribe.getData(new MyObserver<WeatherData>(this) {
 
             @Override
             public void onNext(WeatherData weatherData) {
                 showToast(weatherData.getWeatherinfo().getCity());
             }
-        });
+        })*/
+        ;
     }
 
-    @OnClick({R.id.btn, R.id.btn2, R.id.btn3, R.id.btn4,R.id.btn5})
+    @OnClick({R.id.btn, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -115,4 +127,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onGetSuccess(WeatherData weatherData) {
+        showToast(weatherData.getWeatherinfo().getCity());
+    }
+
+    @Override
+    public void onGetFail(String errorInfo) {
+        showToast(errorInfo);
+    }
 }

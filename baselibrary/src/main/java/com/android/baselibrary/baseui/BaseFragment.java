@@ -28,10 +28,11 @@ import java.util.Objects;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment implements IBaseView {
+public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragment implements IBaseView {
 
     protected String TAG = null;
     private static final int NON_CODE = -1;
+    private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
 
     protected float mScreenDensity;
     protected int mScreenHeight;
@@ -44,10 +45,17 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     protected boolean isVisible;
 
+    protected T mPresenter;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden());
     }
 
     @Override
@@ -61,7 +69,13 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         }
         TAG = this.getClass().getSimpleName();
 
+        mPresenter = createPresenter();//创建presenter
     }
+
+    /**
+     * 创建Presenter对象
+     */
+    protected abstract T createPresenter();
 
     @Nullable
     @Override
@@ -233,11 +247,22 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (null != mPresenter) {
+            mPresenter.attachView((V) this);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         if (loadingPop != null && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
         super.onDestroy();
+        if (null != mPresenter) {
+            mPresenter.detachView();
+        }
     }
 
     public synchronized void hideLoading() {

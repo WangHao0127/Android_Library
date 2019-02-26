@@ -2,6 +2,9 @@ package com.android.baselibrary.baseui;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -11,14 +14,37 @@ import android.widget.Toast;
 import com.android.baselibrary.R;
 import com.android.baselibrary.base.BaseAppCompatActivity;
 import com.android.baselibrary.basedata.EventBusData;
+
 import com.gyf.barlibrary.ImmersionBar;
 
 import org.greenrobot.eventbus.EventBus;
 
-public abstract class BaseActivity extends BaseAppCompatActivity implements IBaseView {
+public abstract class BaseActivity<V, T extends BasePresenter<V>> extends
+    BaseAppCompatActivity implements IBaseView {
 
     private Toast toast;
     protected Dialog loadingPop;
+
+    protected T mPresenter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null != mPresenter) {
+            mPresenter.attachView((V) this);
+        }
+    }
+
+    @Override
+    protected void initPresenter() {
+        //创建presenter
+        mPresenter = createPresenter();
+    }
+
+    /**
+     * 创建Presenter 对象
+     */
+    protected abstract T createPresenter();
 
     @Override
     protected void onNavigateClick() {
@@ -94,7 +120,11 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IBas
             loadingPop.dismiss();
         }
         toast = null;
+
         super.onDestroy();
+        if (null != mPresenter) {
+            mPresenter.detachView();
+        }
     }
 
     @Override

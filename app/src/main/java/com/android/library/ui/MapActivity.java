@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.baselibrary.baseui.BaseActivity;
+import com.android.baselibrary.baseui.BasePresenter;
 import com.android.baselibrary.helper.DialogHelper;
 import com.android.library.R;
 
@@ -250,6 +251,11 @@ public class MapActivity extends BaseActivity {
         mOption.setGeoLanguage(
             AMapLocationClientOption.GeoLanguage.DEFAULT);//可选，设置逆地理信息的语言，默认值为默认语言（根据所在地区选择语言）
         return mOption;
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override
