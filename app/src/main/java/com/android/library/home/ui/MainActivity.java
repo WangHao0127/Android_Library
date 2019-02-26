@@ -76,14 +76,6 @@ public class MainActivity extends BaseActivity<WeatherContract.WeatherView, Weat
     protected void initViewsAndEvents() {
         setCustomTitle("王舒铭");
         mPresenter.getWeatherInfo(this);
-       /* WeatherSubscribe.getData(new MyObserver<WeatherData>(this) {
-
-            @Override
-            public void onNext(WeatherData weatherData) {
-                showToast(weatherData.getWeatherinfo().getCity());
-            }
-        })*/
-        ;
     }
 
     @OnClick({R.id.btn, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5})
