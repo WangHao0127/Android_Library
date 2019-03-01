@@ -7,7 +7,7 @@ import com.android.library.entity.WeatherData;
 /**
  * Author: WangHao
  * Created On: 2019/2/26 0026 15:28
- * Description:
+ * Description:契约类
  */
 public class WeatherContract {
 
