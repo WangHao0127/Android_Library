@@ -65,9 +65,9 @@ public class ImageActivity extends BaseActivity {
 
         img1.enableState(true).load(url1);
         img2.loadCircle(url1);
-      /*  img3.load(url2, R.drawable.ic_arrow, 10);
+        img3.load(url2, R.drawable.ic_arrow, 10);
 
-        image31.centerCrop().error(R.mipmap.image_load_err)
+      /*     image31.centerCrop().error(R.mipmap.image_load_err)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .load(girl, R.color.placeholder, (isComplete, percentage, bytesRead, totalBytes) -> {
                 if (isComplete) {
